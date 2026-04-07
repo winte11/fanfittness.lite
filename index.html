@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>小凡健身 - 智能饮食与排餐系统 (增肌版)</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .brand-color { color: #2563eb; } /* 小凡健身主色调：活力蓝 */
+        .bg-brand { background-color: #2563eb; color: white; }
+        .bg-brand:hover { background-color: #1d4ed8; }
+        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); padding: 1.5rem; }
+        select, input { border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; }
+        select:focus, input:focus { border-color: #2563eb; ring: 2px solid #2563eb; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { border-bottom: 1px solid #e5e7eb; padding: 0.75rem; text-align: left; }
+        th { background-color: #f9fafb; font-weight: 600; color: #4b5563; }
+        .meal-tag { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background-color: #e0e7ff; color: #3730a3; margin-right: 0.5rem; }
+    </style>
+</head>
+<body class="text-gray-800 antialiased p-4 md:p-8">
+
+    <div class="max-w-3xl mx-auto space-y-6">
+        <header class="text-center pb-4">
+            <h1 class="text-3xl font-bold tracking-tight text-gray-900">小凡健身</h1>
+            <p class="text-gray-500 mt-2 text-sm">输入你的身体数据与作息，一键生成专属增肌三大营养素与排餐计划</p>
+        </header>
+
+        <div class="card space-y-4">
+            <h2 class="text-lg font-bold border-l-4 border-blue-600 pl-2">1. 录入身体与作息数据</h2>
+            
+            <div class="grid grid-cols-2 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">目标</label>
+                    <select id="goal" disabled class="bg-gray-100 cursor-not-allowed text-gray-500">
+                        <option value="bulk">增肌 (创造热量盈余)</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">性别</label>
+                    <select id="gender">
+                        <option value="male">男</option>
+                        <option value="female">女</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">体重 (kg)</label>
+                    <input type="number" id="weight" value="70" placeholder="例如: 70">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">身高 (cm)</label>
+                    <input type="number" id="height" value="175" placeholder="例如: 175">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">年龄 (岁)</label>
+                    <input type="number" id="age" value="25" placeholder="例如: 25">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-1">日常活动量</label>
+                    <select id="activity">
+                        <option value="1.2">久坐 (办公室人群)</option>
+                        <option value="1.375">轻度活动 (每天走动)</option>
+                        <option value="1.55">中度活动 (体力劳动)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-medium text-gray-700 mb-1">训练时间安排</label>
+                <select id="workoutTime">
+                    <option value="morning">早饭后练</option>
+                    <option value="noon_before">午饭前练</option>
+                    <option value="noon_after">午饭后练</option>
+                    <option value="evening_before">晚饭前练</option>
+                    <option value="evening_after">晚饭后练</option>
+                    <option value="night">夜里练 (20:00后)</option>
+                    <option value="rest">今日休息 (无力量训练)</option>
+                </select>
+            </div>
+
+            <button onclick="generatePlan()" class="w-full bg-brand font-bold py-3 px-4 rounded-lg transition duration-200 mt-4 shadow-md">
+                一键生成专属方案
+            </button>
+        </div>
+
+        <div id="result-section" class="card space-y-6 hidden">
+            <h2 class="text-lg font-bold border-l-4 border-blue-600 pl-2">2. 你的专属饮食与排餐</h2>
+            
+            <div class="bg-blue-50 rounded-lg p-4 flex justify-between items-center text-center">
+                <div>
+                    <p class="text-xs text-gray-500 font-semibold">目标总热量</p>
+                    <p class="text-xl font-bold brand-color"><span id="res-cal">0</span> kcal</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 font-semibold">碳水化合物</p>
+                    <p class="text-xl font-bold text-gray-800"><span id="res-carb">0</span> g</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 font-semibold">蛋白质</p>
+                    <p class="text-xl font-bold text-gray-800"><span id="res-pro">0</span> g</p>
+                </div>
+                <div>
+                    <p class="text-xs text-gray-500 font-semibold">脂肪</p>
+                    <p class="text-xl font-bold text-gray-800"><span id="res-fat">0</span> g</p>
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>餐次安排</th>
+                            <th>进食时机</th>
+                            <th>碳水 (g)</th>
+                            <th>蛋白质 (g)</th>
+                            <th>脂肪 (g)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="meal-plan-body" class="text-sm">
+                        </tbody>
+                </table>
+            </div>
+            
+            <div class="text-xs text-gray-500 mt-4 bg-gray-50 p-3 rounded">
+                <p class="font-bold mb-1">💡 小凡健身提示：</p>
+                <p>1. 碳水化合物理想来源：米饭、燕麦、红薯、意面等复合碳水。</p>
+                <p>2. 蛋白物理想来源：去皮鸡腿肉、牛瘦肉、鱼虾、鸡蛋、乳清蛋白粉。</p>
+                <p>3. 蔬菜不计入上述宏量营养素，每正餐推荐摄入 150-250g 绿叶蔬菜增加饱腹感。</p>
+            </div>
+
+            <div class="mt-6 border-t pt-5">
+                <h3 class="text-sm font-bold text-gray-700 mb-3 flex items-center">
+                    <svg class="w-4 h-4 mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    背后的计算原理 (为什么这么算？)
+                </h3>
+                <div class="text-xs text-gray-600 space-y-2">
+                    <p><strong>• 基础代谢 (BMR) 与 日常消耗 (TDEE)：</strong>本工具采用目前公认准确度较高的 <span class="text-gray-800 font-medium">Mifflin-St Jeor 公式</span>测算你的静息消耗，并结合活动系数计算出维持当前体重的总热量 (TDEE)。系统会自动在此基础上创造 300 kcal 的干净增肌盈余。</p>
+                    <p><strong>• 宏量营养素 (Macros) 设定：</strong>优先保证蛋白质摄入（设定为 1.8g/kg 促进肌肉合成）；脂肪设定在健康内分泌所需的适中范围；剩余热量全部留给碳水化合物，为你的高强度训练提供充足糖原。</p>
+                    <p><strong>• 科学排餐 (营养时机)：</strong>系统会根据你的训练时间调整营养分配。例如，在训练前后重点倾斜碳水与蛋白质的比例（抓住“合成代谢视窗”），并在此时刻意减少脂肪摄入以加快核心营养的吸收速度。</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm mt-6">
+            <h3 class="text-base font-bold text-blue-800 mb-2 flex items-center">
+                <span>🚀 获取完整版 PRO</span>
+            </h3>
+            <p class="text-sm text-gray-700 leading-relaxed mb-3">
+                当前您使用的是<b>简单增肌版本</b>。想解锁更多进阶功能？<br>
+                <b>完整版 PRO</b> 额外包含：
+            </p>
+            <ul class="text-sm text-gray-600 space-y-1 mb-4 pl-1">
+                <li>✅ <b>精准减脂模式：</b> 个性化安全热量缺口计算，减脂不掉肌肉。</li>
+                <li>✅ <b>详细食物营养库：</b> 常见食材宏量营养素全收录，吃得明白。</li>
+                <li>✅ <b>新手避坑指南：</b> 独家经验总结，帮你少走弯路，高效蜕变。</li>
+            </ul>
+            <div class="bg-white px-4 py-3 rounded-md border border-blue-100 inline-block">
+                <span class="text-gray-600 text-sm">联系交流 / 获取 PRO 版请添加小红书号：</span>
+                <span class="font-bold text-blue-700 text-lg ml-1">95127631290</span>
+            </div>
+        </div>
+
+        <footer class="text-center text-xs text-gray-400 pb-8 mt-4">
+            © 2026 小凡健身 保留所有权利. 基于经典营养学公式计算.
+        </footer>
+    </div>
+
+    <script>
+        function generatePlan() {
+            // 获取输入值
+            const gender = document.getElementById('gender').value;
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const age = parseFloat(document.getElementById('age').value);
+            const activity = parseFloat(document.getElementById('activity').value);
+            const workoutTime = document.getElementById('workoutTime').value;
+
+            // 1. 计算 BMR (Mifflin-St Jeor 公式)
+            let bmr = 0;
+            if (gender === 'male') {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
+            } else {
+                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
+            }
+
+            // 2. 计算 TDEE
+            let tdee = bmr * activity;
+
+            // 3. 计算目标热量和宏量营养素 (仅增肌逻辑)
+            let targetCal = tdee + 300; // 制造 300 大卡盈余
+            let protein = weight * 1.8;
+            let fat = weight * 1.0;
+            let carbs = (targetCal - (protein * 4) - (fat * 9)) / 4;
+
+            // 更新顶部数据看板
+            document.getElementById('res-cal').innerText = Math.round(targetCal);
+            document.getElementById('res-pro').innerText = Math.round(protein);
+            document.getElementById('res-fat').innerText = Math.round(fat);
+            document.getElementById('res-carb').innerText = Math.round(carbs);
+
+            // 4. 根据训练时间进行餐序分配
+            // 设定分配比例 [碳水, 蛋白, 脂肪]
+            let meals = [];
+            
+            if (workoutTime === 'rest') {
+                meals = [
+                    { name: '早饭', tag: '日常', ratio: [0.3, 0.3, 0.33] },
+                    { name: '午饭', tag: '日常', ratio: [0.4, 0.4, 0.33] },
+                    { name: '晚饭', tag: '日常', ratio: [0.3, 0.3, 0.34] }
+                ];
+            } else if (workoutTime === 'evening_after') {
+                meals = [
+                    { name: '早饭', tag: '日常', ratio: [0.25, 0.25, 0.33] },
+                    { name: '午饭', tag: '日常', ratio: [0.35, 0.3, 0.33] },
+                    { name: '晚饭 (练前餐)', tag: '练前1-2h', ratio: [0.25, 0.25, 0.34] },
+                    { name: '练后加餐', tag: '练后30min', ratio: [0.15, 0.2, 0] }
+                ];
+            } else if (workoutTime === 'noon_before') {
+                meals = [
+                    { name: '早饭 (练前餐)', tag: '练前1-2h', ratio: [0.3, 0.2, 0.3] },
+                    { name: '午饭 (练后正餐)', tag: '练后1h内', ratio: [0.4, 0.4, 0.3] },
+                    { name: '晚饭', tag: '日常', ratio: [0.3, 0.4, 0.4] }
+                ];
+            } else {
+                // 默认的一种通用有训练日分配
+                meals = [
+                    { name: '早饭', tag: '日常', ratio: [0.25, 0.25, 0.33] },
+                    { name: '练前加餐', tag: '练前1h', ratio: [0.15, 0.1, 0] },
+                    { name: '练后正餐', tag: '练后1h内', ratio: [0.35, 0.4, 0.33] },
+                    { name: '其他正餐', tag: '日常', ratio: [0.25, 0.25, 0.34] }
+                ];
+            }
+
+            // 渲染表格
+            const tbody = document.getElementById('meal-plan-body');
+            tbody.innerHTML = '';
+            
+            meals.forEach(meal => {
+                const c = Math.round(carbs * meal.ratio[0]);
+                const p = Math.round(protein * meal.ratio[1]);
+                const f = Math.round(fat * meal.ratio[2]);
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="font-medium">${meal.name}</td>
+                    <td><span class="meal-tag">${meal.tag}</span></td>
+                    <td>${c > 0 ? c : 0}</td>
+                    <td>${p > 0 ? p : 0}</td>
+                    <td>${f > 0 ? f : 0}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            // 显示结果区块
+            document.getElementById('result-section').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
