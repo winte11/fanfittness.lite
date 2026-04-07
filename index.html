@@ -3,261 +3,701 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>小凡健身 - 智能饮食与排餐系统 (增肌版)</title>
+    <title>小凡健身 PRO - 终极知识库与排餐中枢 (试用版)</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body { background-color: #f3f4f6; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-        .brand-color { color: #2563eb; } /* 小凡健身主色调：活力蓝 */
+        body { background-color: #f8fafc; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #334155; }
+        
+        .brand-color { color: #2563eb; }
         .bg-brand { background-color: #2563eb; color: white; }
-        .bg-brand:hover { background-color: #1d4ed8; }
-        .card { background-color: white; border-radius: 0.75rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06); padding: 1.5rem; }
-        select, input { border: 1px solid #d1d5db; border-radius: 0.375rem; padding: 0.5rem; width: 100%; outline: none; }
-        select:focus, input:focus { border-color: #2563eb; ring: 2px solid #2563eb; }
-        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
-        th, td { border-bottom: 1px solid #e5e7eb; padding: 0.75rem; text-align: left; }
-        th { background-color: #f9fafb; font-weight: 600; color: #4b5563; }
-        .meal-tag { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; background-color: #e0e7ff; color: #3730a3; margin-right: 0.5rem; }
+        .bg-brand:hover { background-color: #1d4ed8; transform: translateY(-1px); box-shadow: 0 4px 6px -1 rgba(37, 99, 235, 0.2); }
+        .bg-brand:active { transform: translateY(0); }
+        .border-brand { border-color: #2563eb; }
+        
+        .card { background-color: white; border-radius: 1rem; box-shadow: 0 4px 6px -1 rgba(0, 0, 0, 0.05), 0 2px 4px -1 rgba(0, 0, 0, 0.03); padding: 2rem; border: 1px solid #f1f5f9; }
+        
+        select, input { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.6rem 0.75rem; width: 100%; outline: none; transition: all 0.2s ease; background-color: #f8fafc; color: #1e293b; font-weight: 500;}
+        select:focus, input:focus { border-color: #2563eb; background-color: white; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        label { font-weight: 600; color: #475569; margin-bottom: 0.3rem; display: block; font-size: 0.875rem;}
+        
+        .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.875rem; }
+        .data-table th, .data-table td { border-bottom: 1px solid #f1f5f9; padding: 1rem 0.75rem; text-align: center; }
+        .data-table td:first-child { text-align: left; font-weight: 600; color: #1e293b; width: 22%; }
+        .data-table th { background-color: #f8fafc; font-weight: 600; color: #64748b; text-align: center; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;}
+        .data-table tr:hover { background-color: #f8fafc; transition: background-color 0.2s; }
+
+        .sets-input { width: 60px; text-align: center; padding: 0.4rem; font-weight: bold; color: #2563eb; }
+        
+        .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; margin-bottom: 0.2rem; letter-spacing: 0.02em;}
+        .badge-blue { background-color: #eff6ff; color: #1d4ed8; }
+        .badge-green { background-color: #f0fdf4; color: #15803d; }
+        .badge-yellow { background-color: #fefce8; color: #b45309; }
+        .badge-purple { background-color: #faf5ff; color: #7e22ce; }
+        .badge-red { background-color: #fef2f2; color: #b91c1c; }
+        .badge-gray { background-color: #f1f5f9; color: #475569; }
+
+        nav { backdrop-filter: blur(8px); background-color: rgba(255, 255, 255, 0.9); border-bottom: 1px solid #e2e8f0; }
+        .nav-btn { cursor: pointer; padding: 1rem 1.25rem; font-weight: 600; color: #64748b; border-bottom: 3px solid transparent; transition: all 0.2s; font-size: 0.95rem;}
+        .nav-btn:hover { color: #1e293b; }
+        .nav-active { color: #2563eb; border-bottom-color: #2563eb; }
+
+        .article-btn { width: 100%; text-align: left; padding: 0.75rem 1rem; font-size: 0.875rem; border-radius: 0.5rem; transition: all 0.2s; color: #475569; font-weight: 500;}
+        .article-btn:hover { background-color: #f1f5f9; color: #1e293b;}
+        .article-active { background-color: #eff6ff; color: #2563eb; font-weight: 700; }
+        .article-locked { opacity: 0.6; cursor: pointer; }
+        .article-locked:hover { opacity: 1; background-color: #fef2f2; color: #b91c1c; }
+
+        .content-box { line-height: 1.7; color: #334155;}
+        .content-box p { margin-bottom: 1.25rem; }
+        .content-box ul { list-style-type: none; padding-left: 0; margin-bottom: 1.25rem; }
+        .content-box ul li { position: relative; padding-left: 1.5rem; margin-bottom: 0.5rem;}
+        .content-box ul li::before { content: "•"; color: #2563eb; font-weight: bold; position: absolute; left: 0; }
+        .highlight-box { background-color: #f8fafc; padding: 1.25rem; border-radius: 0.5rem; border-left: 4px solid #2563eb; margin: 1.5rem 0; font-size: 0.9rem; color: #1e293b;}
+        
+        .data-matrix-box { background-color: #f8fafc; padding: 1.25rem; border-radius: 0.75rem; border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.2s;}
+        .data-matrix-box:hover { border-color: #cbd5e1; background-color: #f1f5f9;}
+        .data-matrix-title { font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; letter-spacing: 0.05em;}
+        .data-matrix-value { font-size: 1.875rem; font-weight: 900; color: #0f172a; line-height: 1;}
+        .data-matrix-unit { font-size: 0.875rem; font-weight: 500; color: #94a3b8; margin-left: 0.2rem;}
+
+        .exec-btn { padding: 1rem 2rem; border-radius: 0.75rem; font-weight: 700; font-size: 1rem; transition: all 0.2s; cursor: pointer; border: none; display: flex; align-items: center; justify-content: center; }
+        
+        /* 弹窗动画 */
+        .modal-enter { animation: modalFadeIn 0.3s ease-out forwards; }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
     </style>
 </head>
-<body class="text-gray-800 antialiased p-4 md:p-8">
+<body class="antialiased min-h-screen flex flex-col">
 
-    <div class="max-w-3xl mx-auto space-y-6">
-        <header class="text-center pb-4">
-            <h1 class="text-3xl font-bold tracking-tight text-gray-900">小凡健身</h1>
-            <p class="text-gray-500 mt-2 text-sm">输入你的身体数据与作息，一键生成专属增肌三大营养素与排餐计划</p>
-        </header>
+    <nav class="sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <span class="text-2xl font-black tracking-tight text-gray-900">小凡健身 <span class="brand-color">PRO</span></span>
+                    <span class="ml-3 px-2 py-0.5 text-[10px] font-bold bg-gray-100 text-gray-500 rounded border border-gray-200">体验版</span>
+                </div>
+                <div class="flex items-center space-x-1 md:space-x-4 overflow-x-auto">
+                    <button onclick="switchTab('planner')" id="tab-planner" class="nav-btn nav-active whitespace-nowrap">排餐系统</button>
+                    <button onclick="switchTab('training')" id="tab-training" class="nav-btn whitespace-nowrap">智能训练引擎</button>
+                    <button onclick="switchTab('food')" id="tab-food" class="nav-btn whitespace-nowrap">终极食物库</button>
+                    <button onclick="switchTab('learn')" id="tab-learn" class="nav-btn whitespace-nowrap">高阶智库</button>
+                    <button onclick="switchTab('about')" id="tab-about" class="nav-btn whitespace-nowrap">关于我</button>
+                </div>
+            </div>
+        </div>
+    </nav>
 
-        <div class="card space-y-4">
-            <h2 class="text-lg font-bold border-l-4 border-blue-600 pl-2">1. 录入身体与作息数据</h2>
-            
-            <div class="grid grid-cols-2 gap-4">
+    <main class="max-w-6xl mx-auto p-4 md:p-8 flex-grow w-full relative">
+        
+        <section id="sec-planner" class="space-y-6 transition-opacity duration-300">
+            <div class="text-center pb-6">
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">动态自适应排餐系统</h1>
+                <p class="text-gray-500 mt-3 text-sm md:text-base max-w-2xl mx-auto">拒绝死板食谱，基于运动营养学底层逻辑，一键生成精准到克的宏量营养素分配方案。</p>
+            </div>
+
+            <div class="card space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label>当前周期目标 (按月度规划)</label>
+                        <select id="goal">
+                            <option value="cut">严格减脂 (制造500大卡缺口/月减重~2kg)</option>
+                            <option value="recomp">塑形线条 (制造300大卡缺口/缓慢掉秤保肌肉)</option>
+                            <option value="bulk">干净增肌 (制造300大卡盈余/月增重~1kg)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>性别</label>
+                        <select id="gender">
+                            <option value="male">男 (Male)</option>
+                            <option value="female">女 (Female)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                    <div><label>体重 (kg)</label><input type="number" id="weight" value="70"></div>
+                    <div><label>身高 (cm)</label><input type="number" id="height" value="175"></div>
+                    <div><label>年龄 (岁)</label><input type="number" id="age" value="25"></div>
+                    <div>
+                        <label>日常活动量 (NEAT)</label>
+                        <select id="activity">
+                            <option value="1.2">久坐办公 (网课/考研自习室钉子户)</option>
+                            <option value="1.375">轻度活动 (每天规律校园走动/偶尔骑单车)</option>
+                            <option value="1.55">中度活动 (体育生/每天规律有氧+跑动)</option>
+                        </select>
+                    </div>
+                </div>
+
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">目标</label>
-                    <select id="goal" disabled class="bg-gray-100 cursor-not-allowed text-gray-500">
-                        <option value="bulk">增肌 (创造热量盈余)</option>
+                    <label>今日训练时机</label>
+                    <select id="workoutTime">
+                        <option value="morning">早饭后练</option>
+                        <option value="noon_before">午饭前练</option>
+                        <option value="noon_after">午饭后练</option>
+                        <option value="evening_before">晚饭前练</option>
+                        <option value="evening_after">晚饭后练 (最常见)</option>
+                        <option value="night">夜里练 (20:00后)</option>
+                        <option value="rest">今日休息 (无力量训练)</option>
                     </select>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">性别</label>
-                    <select id="gender">
-                        <option value="male">男</option>
-                        <option value="female">女</option>
-                    </select>
+
+                <button onclick="generatePlan()" class="w-full bg-brand font-bold py-4 rounded-lg transition duration-200 mt-4 text-white text-lg tracking-wide shadow-lg shadow-blue-500/30">
+                    生成基础数据化方案
+                </button>
+            </div>
+
+            <div id="result-section" class="card space-y-8 hidden">
+                <div class="border-b border-gray-100 pb-4">
+                    <h2 class="text-xl font-bold text-gray-900 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                        专属宏量营养素 (Macros) 矩阵
+                    </h2>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div class="data-matrix-box border-t-4 border-blue-600">
+                        <p class="data-matrix-title text-blue-600">目标总热量</p>
+                        <p class="data-matrix-value brand-color"><span id="res-cal">0</span></p>
+                    </div>
+                    <div class="data-matrix-box border-t-4 border-gray-400">
+                        <p class="data-matrix-title">碳水 (Carbs)</p>
+                        <p class="data-matrix-value"><span id="res-carb">0</span><span class="data-matrix-unit">g</span></p>
+                    </div>
+                    <div class="data-matrix-box border-t-4 border-gray-400">
+                        <p class="data-matrix-title">蛋白 (Protein)</p>
+                        <p class="data-matrix-value"><span id="res-pro">0</span><span class="data-matrix-unit">g</span></p>
+                    </div>
+                    <div class="data-matrix-box border-t-4 border-gray-400">
+                        <p class="data-matrix-title">脂肪 (Fats)</p>
+                        <p class="data-matrix-value"><span id="res-fat">0</span><span class="data-matrix-unit">g</span></p>
+                    </div>
+                </div>
+                
+                <div class="pt-4">
+                    <h3 class="text-lg font-bold text-gray-900 mb-4 flex items-center">
+                        <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0121 12z"></path></svg>
+                        餐序分配表 (结合营养时机)
+                    </h3>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table class="data-table mt-0">
+                            <thead><tr><th>餐次与时机</th><th>碳水建议 (g)</th><th>蛋白建议 (g)</th><th>脂肪建议 (g)</th></tr></thead>
+                            <tbody id="meal-plan-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="canteen-buttons-container" class="hidden grid grid-cols-1 md:grid-cols-2 gap-4 pt-6 border-t border-gray-100">
+                    <button onclick="showProModal()" class="bg-gray-50 border-2 border-dashed border-gray-300 font-bold py-4 rounded-xl transition duration-200 text-gray-500 hover:bg-gray-100 hover:text-gray-700 hover:border-gray-400 text-base tracking-wide flex items-center justify-center">
+                        🔒 解锁自定义饮食打卡表 (PRO)
+                    </button>
+                    <button onclick="showProModal()" class="bg-gray-50 border-2 border-dashed border-gray-300 font-bold py-4 rounded-xl transition duration-200 text-gray-500 hover:bg-gray-100 hover:text-gray-700 hover:border-gray-400 text-base tracking-wide flex items-center justify-center">
+                        🔒 解锁智能食堂餐单生成 (PRO)
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-training" class="space-y-6 transition-opacity duration-300 hidden">
+            <div class="text-center pb-6">
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">小凡解剖学训练引擎</h1>
+                <p class="text-gray-500 mt-3 text-sm md:text-base max-w-2xl mx-auto">基于肌肉协同发力与关节活动学，为你定制精准的抗阻力训练计划。</p>
+            </div>
+
+            <div id="plan-generator-area">
+                <div class="card space-y-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label>训练分化模式</label>
+                            <select id="trainSplit" onchange="updateTrainDays()">
+                                <option value="3day">三分化 (基础体验版)</option>
+                                <option value="4day">🔒 四分化 (PRO 高阶专属)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>今日目标肌群</label>
+                            <select id="trainDay"></select>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label>当前训练侧重</label>
+                            <select id="trainGoal">
+                                <option value="bulk">整体增肌围度 (大重量机械张力)</option>
+                                <option value="shape">减脂/线条塑形 (高代谢压力消耗)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>重点强化部位 (动态外挂机制)</label>
+                            <select id="targetMuscle">
+                                <option value="none">均衡发展 (基础体验)</option>
+                                <option value="chest">🔒 胸部厚度 (PRO 专属强化)</option>
+                                <option value="back">🔒 背部宽度 (PRO 专属强化)</option>
+                                <option value="shoulder">🔒 饱满球形肩 (PRO 专属强化)</option>
+                                <option value="legs">🔒 腿臀核心 (PRO 专属强化)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <button onclick="generateTraining()" class="w-full bg-gray-900 font-bold py-4 rounded-lg transition duration-200 mt-4 text-white text-lg tracking-wide hover:bg-gray-800 shadow-lg">
+                        生成今日课表
+                    </button>
+                </div>
+
+                <div id="training-result-section" class="card space-y-8 hidden mt-6">
+                    <div class="flex flex-col md:flex-row justify-between items-start md:items-center border-b border-gray-100 pb-4 gap-4">
+                        <h2 class="text-xl font-bold text-gray-900">今日课表：<span id="train-title-display" class="brand-color ml-2"></span></h2>
+                        <div class="flex gap-4 md:text-right bg-gray-50 px-4 py-2 rounded-lg border border-gray-200">
+                            <p class="text-sm font-medium text-gray-600">要求: <strong id="train-reps-display" class="text-gray-900"></strong></p>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table class="data-table mt-0">
+                            <thead><tr><th style="width: 20%;">部位</th><th>推荐动作 (选1-2个)</th><th>建议组数</th><th>要求</th></tr></thead>
+                            <tbody id="training-plan-body"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="relative mt-8 pt-8 border-t border-gray-100">
+                        <div class="filter blur-[4px] opacity-40 select-none pointer-events-none">
+                            <div class="flex justify-center mb-10">
+                                <button class="exec-btn bg-gray-800 text-white w-64"><svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0121 12z"></path></svg>启动执行器</button>
+                            </div>
+                            <h3 class="text-xl font-black text-gray-900 tracking-tight mb-4">训练数据分析中枢</h3>
+                            <div class="grid grid-cols-3 gap-3 mb-6">
+                                <div class="bg-gray-100 h-24 rounded-xl"></div><div class="bg-gray-100 h-24 rounded-xl"></div><div class="bg-gray-100 h-24 rounded-xl"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="absolute inset-0 z-10 flex flex-col items-center justify-center">
+                            <div class="bg-white/90 backdrop-blur-md px-8 py-6 rounded-2xl shadow-xl text-center border border-gray-200 max-w-sm">
+                                <div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                                    <svg class="w-6 h-6 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                                </div>
+                                <h4 class="font-black text-gray-900 text-lg mb-2">执行器与数据看板已锁定</h4>
+                                <p class="text-sm text-gray-500 mb-5">告别纸笔，解锁实时的打卡倒计时与精准的月度容量监控矩阵。</p>
+                                <button onclick="showProModal()" class="w-full bg-gray-900 text-white font-bold py-3 px-6 rounded-xl hover:bg-gray-800 transition shadow-lg">
+                                    解锁 PRO 完整版
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-food" class="space-y-6 hidden transition-opacity duration-300">
+            <div class="text-center pb-6">
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">终极食物成分字典</h1>
+                <p class="text-gray-500 mt-3 text-sm md:text-base max-w-2xl mx-auto">掌握核心食材的生熟转化率，你的眼睛就是最准的秤。（数据为每100g可食用部分）</p>
+            </div>
+
+            <div class="card">
+                <h2 class="text-lg font-bold mb-4 flex items-center text-gray-900"><span class="badge badge-blue mr-3">A级 复合碳水</span> 肌糖原主要来源</h2>
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="data-table mt-0">
+                        <thead><tr><th>食材 (状态)</th><th>碳水率</th><th>GI指数</th><th>硬核避坑指南 (生熟转化)</th></tr></thead>
+                        <tbody>
+                            <tr><td>生米类 (大/糙/小米)</td><td class="font-bold text-blue-600">75%</td><td>高/中</td><td class="text-left text-xs">除了黑米外，糙米等生重碳水率均在75%左右，并不属于低GI。</td></tr>
+                            <tr><td>熟米饭 (常规)</td><td class="font-bold text-blue-600">25%</td><td>高</td><td class="text-left text-xs"><strong>【外卖刺客】</strong>普通外卖盒压实的饭，往往含100-120g纯碳水。</td></tr>
+                            <tr><td>生麦片 (纯燕麦)</td><td class="font-bold text-blue-600">60%</td><td>低</td><td class="text-left text-xs">饱腹感强。<strong>【警惕】</strong>避开配料表带“植脂末、白砂糖”的花式燕麦。</td></tr>
+                            <tr><td>生面条 / 意面</td><td class="font-bold text-blue-600">75%</td><td>高/中</td><td class="text-left text-xs">意面/荞麦面生重碳水极高，意面煮熟吸水率低，熟重含碳高于普通面条。</td></tr>
+                            <tr><td>熟面条 (汤/拌面)</td><td class="font-bold text-blue-600">30%</td><td>高</td><td class="text-left text-xs"><strong>【外卖刺客】</strong>外卖面条分量大，纯碳水极少低于100g，减脂期慎点。</td></tr>
+                            <tr><td>红薯/芋头 (生/熟)</td><td class="font-bold text-blue-600">20%</td><td>中/低</td><td class="text-left text-xs">体积大含水高，饱腹感极强。200g红薯碳水才顶100g熟米饭，减脂神主食。</td></tr>
+                            <tr><td>全麦面包 (成品)</td><td class="font-bold text-blue-600">50%</td><td>中</td><td class="text-left text-xs">若是加糖的花式面包，碳水飙升且升糖快。贝果密度大，适合练前充碳。</td></tr>
+                            <tr><td>水果类 (莓/果等)</td><td class="font-bold text-blue-600">10%</td><td>低/中</td><td class="text-left text-xs"><strong>【果糖陷阱】</strong>果糖走肝脏极易合成脂肪。必须吃完整的，<strong>坚决不榨汁！</strong></td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">体重 (kg)</label>
-                    <input type="number" id="weight" value="70" placeholder="例如: 70">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">身高 (cm)</label>
-                    <input type="number" id="height" value="175" placeholder="例如: 175">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">年龄 (岁)</label>
-                    <input type="number" id="age" value="25" placeholder="例如: 25">
-                </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">日常活动量</label>
-                    <select id="activity">
-                        <option value="1.2">久坐 (办公室人群)</option>
-                        <option value="1.375">轻度活动 (每天走动)</option>
-                        <option value="1.55">中度活动 (体力劳动)</option>
-                    </select>
+            <div class="card">
+                <h2 class="text-lg font-bold mb-4 flex items-center text-gray-900"><span class="badge badge-green mr-3">S级 核心蛋白</span> 修复肌纤维基石</h2>
+                <div class="overflow-x-auto rounded-xl border border-gray-200">
+                    <table class="data-table mt-0">
+                        <thead><tr><th>食材 (状态)</th><th>蛋白率</th><th>脂肪/碳水</th><th>硬核避坑指南 (隐形脂肪)</th></tr></thead>
+                        <tbody>
+                            <tr><td>生瘦肉 (鸡胸/瘦牛/里脊)</td><td class="font-bold text-green-600">20%</td><td>极低脂</td><td class="text-left text-xs">绝大多数陆地纯瘦肉生重蛋白率均在20%。猪里脊也是极佳的瘦肉来源。</td></tr>
+                            <tr><td>生海鲜 (鱼类/虾仁)</td><td class="font-bold text-green-600">15%</td><td>极低脂</td><td class="text-left text-xs">水分更大，生重蛋白略低。<strong>【注】</strong>冷冻虾仁化水后重量大幅缩水。</td></tr>
+                            <tr><td>熟瘦肉 (煎烤/水煮)</td><td class="font-bold text-green-600">35%</td><td>看烹饪</td><td class="text-left text-xs">做熟后水分流失重量减轻，<strong>熟肉的蛋白率会飙升至30%甚至40%以上</strong>。</td></tr>
+                            <tr><td>全蛋 (带壳)</td><td class="font-bold text-green-600">12%</td><td>5g脂/个</td><td class="text-left text-xs">最完美的氨基酸谱系。1个标准全蛋约含 6g蛋白 + 5g脂肪。</td></tr>
+                            <tr><td>纯蛋清</td><td class="font-bold text-green-600">11%</td><td>0脂肪</td><td class="text-left text-xs">1个纯蛋清约 3g蛋白。减脂期廉价高效吃法：1个全蛋配3个纯蛋清。</td></tr>
+                            <tr><td>乳清蛋白粉</td><td class="font-bold text-green-600">75%</td><td>微量</td><td class="text-left text-xs">最廉价纯粹、吸收最快的蛋白，极适合练后。素食者可买大豆分离蛋白。</td></tr>
+                            <tr><td>北豆腐 / 老豆腐</td><td class="font-bold text-green-600">12%</td><td>适中</td><td class="text-left text-xs">植物蛋白佳品。<strong>【警惕】</strong>内酯豆腐蛋白仅5%，油豆腐吸满油，坚决避开。</td></tr>
+                            <tr class="bg-red-50"><td>🚫 脂肪陷阱肉类</td><td class="font-bold text-red-600">极低</td><td>爆表</td><td class="text-left text-xs"><strong>【隐形脂肪】：五花肉、排骨、肥牛卷、午餐肉、热狗、肉丸。</strong>全长肥肉！</td></tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
 
-            <div>
-                <label class="block text-sm font-medium text-gray-700 mb-1">训练时间安排</label>
-                <select id="workoutTime">
-                    <option value="morning">早饭后练</option>
-                    <option value="noon_before">午饭前练</option>
-                    <option value="noon_after">午饭后练</option>
-                    <option value="evening_before">晚饭前练</option>
-                    <option value="evening_after">晚饭后练</option>
-                    <option value="night">夜里练 (20:00后)</option>
-                    <option value="rest">今日休息 (无力量训练)</option>
-                </select>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="card">
+                    <h2 class="text-lg font-bold mb-4 text-gray-900"><span class="badge badge-yellow">B级 优质脂肪</span><br><span class="text-xs text-gray-500 font-normal mt-1 block">合成睾酮素的必需品，切忌零脂</span></h2>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table class="data-table mt-0">
+                            <thead><tr><th>食材/类别</th><th>脂肪率</th><th>避坑指南</th></tr></thead>
+                            <tbody>
+                                <tr><td>坚果 (核桃/巴旦木)</td><td class="font-bold text-yellow-600">>50%</td><td class="text-xs text-left">热量炸弹。一天最多一小把(20g)，多吃必胖。</td></tr>
+                                <tr><td>纯花生酱 (无糖无油)</td><td class="font-bold text-yellow-600">>50%</td><td class="text-xs text-left">增肌绝佳热量。配料只能有花生，不能有糖/油。</td></tr>
+                                <tr><td>液态油 (橄榄油等)</td><td class="font-bold text-yellow-600">99%</td><td class="text-xs text-left">一汤匙约15g纯脂肪（135大卡），炒菜严格控量。</td></tr>
+                                <tr class="bg-red-50"><td>🚫 浓汤/骨头汤</td><td class="font-bold text-red-600">极高</td><td class="text-xs text-left"><strong>绝对刺客！</strong>奶白汤全是骨髓脂肪乳化，毫无补钙价值。</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2 class="text-lg font-bold mb-4 text-gray-900"><span class="badge badge-gray">黑客区：无卡平替</span><br><span class="text-xs text-gray-500 font-normal mt-1 block">减脂期提升幸福感的合法作弊手段</span></h2>
+                    <div class="overflow-x-auto rounded-xl border border-gray-200">
+                        <table class="data-table mt-0">
+                            <thead><tr><th>类别</th><th>推荐平替方案</th><th>减掉的隐形热量</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>面条类</strong></td><td class="text-left text-xs">魔芋丝 / 魔芋结 (几乎0卡)</td><td class="text-xs text-blue-600 font-bold">- 250大卡纯碳水</td></tr>
+                                <tr><td><strong>沙拉酱</strong></td><td class="text-left text-xs">油醋汁 / 零卡黄芥末</td><td class="text-xs text-yellow-600 font-bold">- 150大卡纯油</td></tr>
+                                <tr><td><strong>炒菜油</strong></td><td class="text-left text-xs">零卡喷雾油 (极易控量)</td><td class="text-xs text-yellow-600 font-bold">- 100大卡脂肪</td></tr>
+                                <tr><td><strong>饮料类</strong></td><td class="text-left text-xs">零度可乐 / 黑咖 / 纯茶</td><td class="text-xs text-red-600 font-bold">- 200大卡白砂糖</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
 
-            <button onclick="generatePlan()" class="w-full bg-brand font-bold py-3 px-4 rounded-lg transition duration-200 mt-4 shadow-md">
-                一键生成专属方案
+            <div class="card mt-6 border-t-4 border-brand relative overflow-hidden">
+                <h2 class="text-lg font-bold mb-6 flex items-center text-gray-900 border-b border-gray-100 pb-4 relative z-20 bg-white">
+                    <span class="text-2xl mr-3">🍱</span> 常见外卖/食堂菜品宏量图鉴 (Visual DB)
+                </h2>
+                
+                <div id="visual-db-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 filter blur-[6px] opacity-40 select-none pointer-events-none max-h-[350px] overflow-hidden">
+                    </div>
+                
+                <div class="absolute inset-0 bg-gradient-to-t from-white via-white/70 to-transparent flex flex-col items-center justify-end pb-12 z-10">
+                    <div class="bg-white/90 backdrop-blur-sm px-8 py-5 rounded-2xl shadow-xl text-center border border-gray-100 transform -translate-y-4">
+                        <svg class="w-10 h-10 text-brand mx-auto mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                        <h4 class="font-black text-gray-900 text-xl mb-1">60+ 食堂菜品图鉴已锁定</h4>
+                        <p class="text-xs text-gray-500 mb-5">丢掉计算器，用最直观的方式掌握成分转化</p>
+                        <button onclick="showProModal()" class="bg-gray-900 text-white font-bold py-3 px-8 rounded-xl hover:bg-gray-800 transition shadow-lg">
+                            解锁完整版图鉴
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-learn" class="hidden transition-opacity duration-300">
+            <div class="text-center pb-6 mt-4">
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">小凡高阶健身智库 <span class="brand-color text-xl align-top block sm:inline mt-2 sm:mt-0">PRO</span></h1>
+                <p class="text-gray-500 mt-3 text-sm md:text-base max-w-2xl mx-auto">粉碎业界伪科学，从底层逻辑重塑减脂、增肌与结构力学。</p>
+            </div>
+            <div class="flex flex-col md:flex-row gap-6">
+                <div class="w-full md:w-1/3">
+                    <div class="card p-4 h-full">
+                        <div class="font-black text-gray-800 pb-3 border-b border-gray-100 mb-2 flex items-center">
+                            <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+                            智库文献目录
+                        </div>
+                        <div id="article-nav-container" class="space-y-1"></div>
+                    </div>
+                </div>
+                <div class="w-full md:w-2/3">
+                    <div class="card min-h-[500px]" id="article-content-container"></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="sec-about" class="hidden transition-opacity duration-300">
+            <div class="text-center pb-6 mt-4">
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">关于作者</h1>
+            </div>
+            <div class="card max-w-3xl mx-auto">
+                <div class="content-box">
+                    <p class="font-bold text-lg text-gray-900 border-b border-gray-100 pb-4 mb-6">
+                        大家好，我是小凡，一个研二在读土木的普通健身爱好者。
+                    </p>
+                    <p>最开始只是想把自己一年多踩坑攒的健身知识做成表格，当个兼职资料卖。但做着做着就总想把它做得更完善——专门给学生党、健身基础差、又不想花大把时间啃复杂理论的人用。对大多数人来说，不用自己研究，直接拿到一个科学、适合自己的方案，才是最省心的。</p>
+                    <p>为了做这个“不用动脑的自动化工具”，我试着用AI一点点搭程序。过程就像补一个漏风的棚子，一砖一瓦搬，一面一面修，不断试错、不断“驯服”人工智能。说来也感慨，现在的技术，居然能让一个学土木的人，做出属于自己的互联网产品。</p>
+                    <p>这个程序里的所有内容，完完全全足以支撑你建立健身和营养的基础认知。我没办法保证每一个字都绝对正确，但90%以上的内容、计算逻辑和避坑指南，都是我自己验证过、接近行业共识的真相。<span class="font-bold text-blue-600">没有广告，没有套路，没有隐形消费</span>，就是我自己用着好用，做出来分享给同样需要的人。</p>
+                    
+                    <div class="mt-10 mb-8">
+                        <h3 class="text-xl font-black text-gray-900 mb-4 flex items-center">
+                            <svg class="w-6 h-6 mr-2 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                            程序解构：没有黑盒，全是硬核逻辑
+                        </h3>
+                        <p class="text-sm text-gray-600 mb-4">既然是自己敲出来的工具，干脆把底层的判定逻辑敞开给大家看。这套系统就像是一个结构工程的受力模型，每一个克数都不是拍脑袋决定的：</p>
+                        
+                        <div class="space-y-4">
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-blue-500 mr-2"></span> 1. 宏量素的“承重分配”</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed">系统首先通过 Mifflin-St Jeor 公式精确测算你的基础代谢与 TDEE。重点在于<strong class="text-blue-600">蛋白质系数的动态保护机制</strong>：在减脂期（热量亏空），系统会强制为你套上 2.0g/kg 的高蛋白“铠甲”，死保肌肉不流失；而在增肌期（热量盈余），反而会把蛋白系数下调到 1.6g/kg，把宝贵的热量额度让位给碳水，为你提供最猛的机械张力燃料。</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-green-500 mr-2"></span> 2. 营养时机的“应力调节”</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed">传统的死板食谱是把食物平分到三餐，但这个程序会根据你选择的“训练时机”进行打乱重组。它会将你全天最大比例的碳水和蛋白质，精准锁定在<strong class="text-green-600">练前储备和练后的“合成代谢视窗期”</strong>，让你练得动，同时最大限度避开脂肪囤积。</p>
+                            </div>
+                            
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-yellow-500 mr-2"></span> 3. 关于食堂的菜单</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed">一键生成的食堂餐单绝对不是预设好的“死菜单”，是我根据推断出大概食堂阿姨或外卖一份的量。当然这个肯定是有出入的，但对于那些对自己饮食要求没那么严格的人来说这个是足够的，如果你对自己的饮食想严格一点，<strong class="text-green-600">强烈建议大家买个克重称</strong>，平时遇到什么东西都称一下，让自己对克数有个大概的概念。</p>
+                            </div>
+
+                            <div class="bg-gray-50 border border-gray-200 rounded-xl p-5">
+                                <h4 class="font-bold text-gray-900 mb-2 flex items-center"><span class="w-2 h-2 rounded-full bg-purple-500 mr-2"></span> 4. 智能训练引擎的“受力模型”</h4>
+                                <p class="text-sm text-gray-600 leading-relaxed">智能训练引擎的底层其实是一个“基础解剖学模板+动态动作注入+数据展平状态机”的模型，程序会先加载严谨的关节发力链，再通过代码动态外挂你选择的局部强化动作，最后把多组计划降维展平成一维的逐组打卡列表。我之所以这么设计，是因为这套系统主要针对新手，必须把枯燥的理论变成“傻瓜式”的绝对指令——比如你选整体增肌围度，系统就会强制定制10-15次的中高强度大重量拉伸，并匹配2-3分钟的组间休息；若选减脂塑形，则立刻切换到12-20次的代谢压力消耗，把休息缩短至1-1.5分钟。这种像画工程图纸一样充满结构感的设计，能彻底剥离初学者的决策成本。</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>我相信这个“土法杂交”出来的实用工具，会有它的价值。未来这个市场里，一定会有更多像它一样，简单、靠谱、不割韭菜的产品出现。</p>
+                    
+                    <div class="bg-blue-50 border border-blue-100 rounded-xl p-6 mt-8">
+                        <p class="text-gray-800 font-medium mb-3">目前我一个人的能力有限，还有很多想法没能实现。如果你懂营销、懂程序开发或者懂健身，也恰好看好这个方向，欢迎联系我交流合作：</p>
+                        <div class="flex items-center text-lg font-black brand-color">
+                            <span class="mr-2">💬</span> 小红书号：95127631290
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <div id="pro-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4 transition-opacity">
+        <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 transform scale-95 transition-transform modal-enter">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-black text-gray-900 flex items-center">
+                    <svg class="w-6 h-6 text-brand mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                    解锁 PRO 版体验
+                </h3>
+                <button onclick="closeProModal()" class="text-gray-400 hover:text-gray-600 transition bg-gray-100 rounded-full p-1"><svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg></button>
+            </div>
+            <div class="text-sm text-gray-600 space-y-3 leading-relaxed mb-6">
+                <p>兄弟，这里被锁定的代码逻辑和自动化打卡功能，是我熬了无数个大夜敲出来的核心心血。</p>
+                <p>如果前面的基础体验已经帮你建立起了正确的认知，说明我们的理念是一致的。购买 PRO 版，只需一顿外卖的钱，就能永久解锁：</p>
+                <ul class="list-none pl-0 mt-3 space-y-2 text-gray-800 font-medium bg-gray-50 p-4 rounded-xl border border-gray-100">
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 动态食堂菜单算法与打卡追踪</li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 完整的高阶分化训练引擎与执行器</li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 终极食物视觉图鉴数据</li>
+                    <li class="flex items-center"><span class="text-green-500 mr-2">✓</span> 所有底层逻辑与高阶智库文献</li>
+                </ul>
+                <p class="text-xs text-gray-400 mt-2">没有套路，一次买断，所有新功能终身受用。</p>
+            </div>
+            <button onclick="copyXHS()" class="block w-full bg-brand text-white text-center font-bold py-3.5 rounded-xl hover:bg-blue-700 transition shadow-lg shadow-blue-500/30">
+                💬 复制小红书号：95127631290 去沟通
             </button>
         </div>
-
-        <div id="result-section" class="card space-y-6 hidden">
-            <h2 class="text-lg font-bold border-l-4 border-blue-600 pl-2">2. 你的专属饮食与排餐</h2>
-            
-            <div class="bg-blue-50 rounded-lg p-4 flex justify-between items-center text-center">
-                <div>
-                    <p class="text-xs text-gray-500 font-semibold">目标总热量</p>
-                    <p class="text-xl font-bold brand-color"><span id="res-cal">0</span> kcal</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500 font-semibold">碳水化合物</p>
-                    <p class="text-xl font-bold text-gray-800"><span id="res-carb">0</span> g</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500 font-semibold">蛋白质</p>
-                    <p class="text-xl font-bold text-gray-800"><span id="res-pro">0</span> g</p>
-                </div>
-                <div>
-                    <p class="text-xs text-gray-500 font-semibold">脂肪</p>
-                    <p class="text-xl font-bold text-gray-800"><span id="res-fat">0</span> g</p>
-                </div>
-            </div>
-
-            <div class="overflow-x-auto">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>餐次安排</th>
-                            <th>进食时机</th>
-                            <th>碳水 (g)</th>
-                            <th>蛋白质 (g)</th>
-                            <th>脂肪 (g)</th>
-                        </tr>
-                    </thead>
-                    <tbody id="meal-plan-body" class="text-sm">
-                        </tbody>
-                </table>
-            </div>
-            
-            <div class="text-xs text-gray-500 mt-4 bg-gray-50 p-3 rounded">
-                <p class="font-bold mb-1">💡 小凡健身提示：</p>
-                <p>1. 碳水化合物理想来源：米饭、燕麦、红薯、意面等复合碳水。</p>
-                <p>2. 蛋白物理想来源：去皮鸡腿肉、牛瘦肉、鱼虾、鸡蛋、乳清蛋白粉。</p>
-                <p>3. 蔬菜不计入上述宏量营养素，每正餐推荐摄入 150-250g 绿叶蔬菜增加饱腹感。</p>
-            </div>
-
-            <div class="mt-6 border-t pt-5">
-                <h3 class="text-sm font-bold text-gray-700 mb-3 flex items-center">
-                    <svg class="w-4 h-4 mr-1 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    背后的计算原理 (为什么这么算？)
-                </h3>
-                <div class="text-xs text-gray-600 space-y-2">
-                    <p><strong>• 基础代谢 (BMR) 与 日常消耗 (TDEE)：</strong>本工具采用目前公认准确度较高的 <span class="text-gray-800 font-medium">Mifflin-St Jeor 公式</span>测算你的静息消耗，并结合活动系数计算出维持当前体重的总热量 (TDEE)。系统会自动在此基础上创造 300 kcal 的干净增肌盈余。</p>
-                    <p><strong>• 宏量营养素 (Macros) 设定：</strong>优先保证蛋白质摄入（设定为 1.8g/kg 促进肌肉合成）；脂肪设定在健康内分泌所需的适中范围；剩余热量全部留给碳水化合物，为你的高强度训练提供充足糖原。</p>
-                    <p><strong>• 科学排餐 (营养时机)：</strong>系统会根据你的训练时间调整营养分配。例如，在训练前后重点倾斜碳水与蛋白质的比例（抓住“合成代谢视窗”），并在此时刻意减少脂肪摄入以加快核心营养的吸收速度。</p>
-                </div>
-            </div>
-        </div>
-
-        <div class="card bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-100 shadow-sm mt-6">
-            <h3 class="text-base font-bold text-blue-800 mb-2 flex items-center">
-                <span>🚀 获取完整版 PRO</span>
-            </h3>
-            <p class="text-sm text-gray-700 leading-relaxed mb-3">
-                当前您使用的是<b>简单增肌版本</b>。想解锁更多进阶功能？<br>
-                <b>完整版 PRO</b> 额外包含：
-            </p>
-            <ul class="text-sm text-gray-600 space-y-1 mb-4 pl-1">
-                <li>✅ <b>精准减脂模式：</b> 个性化安全热量缺口计算，减脂不掉肌肉。</li>
-                <li>✅ <b>详细食物营养库：</b> 常见食材宏量营养素全收录，吃得明白。</li>
-                <li>✅ <b>新手避坑指南：</b> 独家经验总结，帮你少走弯路，高效蜕变。</li>
-            </ul>
-            <div class="bg-white px-4 py-3 rounded-md border border-blue-100 inline-block">
-                <span class="text-gray-600 text-sm">联系交流 / 获取 PRO 版请添加小红书号：</span>
-                <span class="font-bold text-blue-700 text-lg ml-1">95127631290</span>
-            </div>
-        </div>
-
-        <footer class="text-center text-xs text-gray-400 pb-8 mt-4">
-            © 2026 小凡健身 保留所有权利. 基于经典营养学公式计算.
-        </footer>
     </div>
 
+    <footer class="text-center py-8 mt-12 bg-white border-t border-gray-200">
+        <p class="font-bold text-gray-800 mb-1 tracking-wider">小凡健身 PRO</p>
+        <p class="text-xs text-gray-400">严谨 · 数据 · 底层逻辑</p>
+        <p class="text-xs text-gray-400 mt-4">© 2026 保留所有权利. 本工具仅供参考，不作为医疗凭证。</p>
+    </footer>
+
     <script>
+        // ================= 弹窗控制与小红书复制 =================
+        function showProModal() {
+            const modal = document.getElementById('pro-modal');
+            modal.classList.remove('hidden');
+        }
+        
+        function closeProModal() {
+            const modal = document.getElementById('pro-modal');
+            modal.classList.add('hidden');
+        }
+
+        function copyXHS() {
+            navigator.clipboard.writeText('95127631290').then(() => {
+                alert('✅ 已成功复制小红书号：95127631290\n请打开小红书 APP 搜索添加我吧！');
+                closeProModal();
+            }).catch(err => {
+                alert('复制失败，请手动记录小红书号：95127631290');
+            });
+        }
+
+        // ================= 数据依赖 (保留少部分用于视觉图鉴展示) =================
+        const CANTEEN_DATABASE = [
+            { category: '大荤硬菜类', name: '红烧肉', weight: 120, calories: 480, carbs: 2, protein: 12, fat: 45, goals: ['bulk'], tips: '脂肪含量极高，减脂期慎选' },
+            { category: '大荤硬菜类', name: '红烧排骨', weight: 150, calories: 410, carbs: 8, protein: 25, fat: 28, goals: ['recomp', 'bulk'], tips: '骨头占重，实际肉量较少' },
+            { category: '大荤硬菜类', name: '糖醋里脊', weight: 150, calories: 450, carbs: 35, protein: 18, fat: 22, goals: ['bulk'], tips: '含糖量高，减脂期禁用' },
+            { category: '大荤硬菜类', name: '清蒸鱼', weight: 150, calories: 180, carbs: 0, protein: 35, fat: 5, goals: ['cut', 'recomp', 'bulk'], tips: '高蛋白低脂肪，减脂期首选' },
+            { category: '荤素搭配类', name: '宫保鸡丁', weight: 180, calories: 310, carbs: 12, protein: 22, fat: 18, goals: ['cut', 'recomp', 'bulk'], tips: '花生多，注意脂肪量' },
+            { category: '荤素搭配类', name: '番茄炒蛋', weight: 180, calories: 220, carbs: 8, protein: 10, fat: 15, goals: ['cut', 'recomp', 'bulk'], tips: '经典下饭菜，控制量' }
+        ];
+
+        const articles = [
+            { id: 'm1_1', module: '减脂底层逻辑', badge: 'badge-red', title: '体重停滞的假象：皮质醇与“水肿欺骗”', readTime: '5分钟', content: `<p>很多小白减脂，每天少吃多动，前几天掉秤很快，到了第二周体重却一动不动，甚至喝口水都能涨半斤。这时候80%的人会崩溃，选择暴饮暴食放弃。</p><h3 class="text-lg font-bold text-gray-900 mt-6 mb-3">皮质醇 (Cortisol) 的锁水效应</h3><p>当你长时间制造极大的热量缺口，或者每天疯狂做有氧时，身体会认为你处于“逃生/生存危机”状态。此时，肾上腺会分泌大量的压力激素——<strong>皮质醇</strong>。</p><p>皮质醇不仅会分解你的肌肉，还会导致一种极端的生理现象：<strong>水钠潴留（Water Retention）</strong>。皮下细胞会像海绵一样死死锁住水分。事实上，你每天制造的缺口已经在燃烧脂肪了，脂肪细胞变空了，但立刻被水分填满撑起，所以在体重秤上，你的数字纹丝不动。</p><div class="highlight-box"><strong class="block mb-2 text-blue-700">小凡硬核破局法 (The Whoosh Effect)：</strong>当遇到储水期，你需要立刻停止节食，吃一顿富含碳水化合物的高热量大餐（欺骗餐），并好好睡一觉。大量的碳水和放松的心情会瞬间压制皮质醇水平。第二天，你的身体会排出滞留的水分（医学上称为 Whoosh 效应），你会发现体重直接“尿崩”式下降 1-2 公斤。记住：看镜子里的维度，永远比看体重秤更准确。</div>` },
+            { id: 'm1_2', module: '减脂底层逻辑', badge: 'badge-red', title: '局部减脂谎言与“顽固脂肪”受体学说', readTime: '6分钟', content: `<p>“教练，我怎么才能只减肚子上的肉？” 这是健身界最大的谎言。你每天做100个卷腹，最后只会让腰椎间盘突出，肚子外面的肥肉依然存在。</p><h3 class="text-lg font-bold text-gray-900 mt-6 mb-3">细胞学真相：α受体与β受体</h3><p>脂肪细胞内有两种受体决定了脂肪分解的难度：</p><ul><li><strong>β-2 受体：</strong> 促进脂肪分解的“加速器”。</li><li><strong>α-2 受体：</strong> 抑制脂肪分解的“刹车片”。</li></ul><p>由于人类基因的设定，我们的面部、手臂和胸部布满了 β-2 受体，所以只要一节食，脸和胸最先瘦；而腹部、腰间（Love Handles）以及女性的大腿根部，密密麻麻地长满了 α-2 受体，血液循环极差。</p><div class="highlight-box"><strong class="block mb-2 text-blue-700">小凡实战指南：</strong>不要再花钱买什么“暴汗服”和“腹部按摩仪”了，那排出的只是水分。想要减掉腹部的顽固脂肪，没有任何捷径。你必须依靠<strong>持续、系统性的热量缺口</strong>。当你的脸和四肢脂肪被榨干后，身体为了生存，才会迫不得已去调动腹部那些被 α-2 受体锁死的“顽固脂肪”。</div>` },
+            { id: 'm2_1', module: '增肌核心理论', badge: 'badge-green', title: '拒绝脏增肌：P-Ratio 分配率与体脂红线 (PRO)', readTime: '7分钟', content: `` },
+            { id: 'm2_2', module: '增肌核心理论', badge: 'badge-green', title: '垃圾容量陷阱：为什么练了3小时却不长肉？(PRO)', readTime: '6分钟', content: `` },
+            { id: 'm3_1', module: '结构力学与数据', badge: 'badge-purple', title: '深蹲剪切力与动作轨迹的 CV 视觉测算 (PRO)', readTime: '8分钟', content: `` }
+        ];
+
+        // ================= 导航切换 =================
+        function switchTab(tabId) {
+            ['planner', 'training', 'food', 'learn', 'about'].forEach(id => {
+                document.getElementById('sec-' + id).classList.add('hidden');
+                document.getElementById('tab-' + id).classList.remove('nav-active');
+            });
+            document.getElementById('sec-' + tabId).classList.remove('hidden');
+            document.getElementById('tab-' + tabId).classList.add('nav-active');
+            
+            if(tabId === 'training') { updateTrainDays(); }
+            if(tabId === 'learn') { initArticleNav(); }
+            if(tabId === 'food') { renderVisualFoodDB(); }
+        }
+
+        // ================= 试用版：排餐系统基础逻辑 =================
         function generatePlan() {
-            // 获取输入值
-            const gender = document.getElementById('gender').value;
+            const goal = document.getElementById('goal').value;
             const weight = parseFloat(document.getElementById('weight').value);
             const height = parseFloat(document.getElementById('height').value);
             const age = parseFloat(document.getElementById('age').value);
+            const gender = document.getElementById('gender').value;
             const activity = parseFloat(document.getElementById('activity').value);
             const workoutTime = document.getElementById('workoutTime').value;
 
-            // 1. 计算 BMR (Mifflin-St Jeor 公式)
-            let bmr = 0;
-            if (gender === 'male') {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) + 5;
-            } else {
-                bmr = (10 * weight) + (6.25 * height) - (5 * age) - 161;
-            }
-
-            // 2. 计算 TDEE
+            let bmr = (gender === 'male') ? (10 * weight) + (6.25 * height) - (5 * age) + 5 : (10 * weight) + (6.25 * height) - (5 * age) - 161;
             let tdee = bmr * activity;
+            let targetCal, protein, fat, carbs;
 
-            // 3. 计算目标热量和宏量营养素 (仅增肌逻辑)
-            let targetCal = tdee + 300; // 制造 300 大卡盈余
-            let protein = weight * 1.8;
-            let fat = weight * 1.0;
-            let carbs = (targetCal - (protein * 4) - (fat * 9)) / 4;
+            if (goal === 'cut') { targetCal = tdee - 500; protein = weight * 2.0; fat = weight * 0.8; } 
+            else if (goal === 'recomp') { targetCal = tdee - 300; protein = weight * 1.8; fat = weight * 0.9; } 
+            else { targetCal = tdee + 300; protein = weight * 1.6; fat = weight * 1.0; }
+            
+            carbs = (targetCal - (protein * 4) - (fat * 9)) / 4;
+            if(carbs < 50) carbs = 50; 
 
-            // 更新顶部数据看板
             document.getElementById('res-cal').innerText = Math.round(targetCal);
             document.getElementById('res-pro').innerText = Math.round(protein);
             document.getElementById('res-fat').innerText = Math.round(fat);
             document.getElementById('res-carb').innerText = Math.round(carbs);
 
-            // 4. 根据训练时间进行餐序分配
-            // 设定分配比例 [碳水, 蛋白, 脂肪]
             let meals = [];
-            
-            if (workoutTime === 'rest') {
-                meals = [
-                    { name: '早饭', tag: '日常', ratio: [0.3, 0.3, 0.33] },
-                    { name: '午饭', tag: '日常', ratio: [0.4, 0.4, 0.33] },
-                    { name: '晚饭', tag: '日常', ratio: [0.3, 0.3, 0.34] }
-                ];
-            } else if (workoutTime === 'evening_after') {
-                meals = [
-                    { name: '早饭', tag: '日常', ratio: [0.25, 0.25, 0.33] },
-                    { name: '午饭', tag: '日常', ratio: [0.35, 0.3, 0.33] },
-                    { name: '晚饭 (练前餐)', tag: '练前1-2h', ratio: [0.25, 0.25, 0.34] },
-                    { name: '练后加餐', tag: '练后30min', ratio: [0.15, 0.2, 0] }
-                ];
-            } else if (workoutTime === 'noon_before') {
-                meals = [
-                    { name: '早饭 (练前餐)', tag: '练前1-2h', ratio: [0.3, 0.2, 0.3] },
-                    { name: '午饭 (练后正餐)', tag: '练后1h内', ratio: [0.4, 0.4, 0.3] },
-                    { name: '晚饭', tag: '日常', ratio: [0.3, 0.4, 0.4] }
-                ];
-            } else {
-                // 默认的一种通用有训练日分配
-                meals = [
-                    { name: '早饭', tag: '日常', ratio: [0.25, 0.25, 0.33] },
-                    { name: '练前加餐', tag: '练前1h', ratio: [0.15, 0.1, 0] },
-                    { name: '练后正餐', tag: '练后1h内', ratio: [0.35, 0.4, 0.33] },
-                    { name: '其他正餐', tag: '日常', ratio: [0.25, 0.25, 0.34] }
-                ];
-            }
+            if (workoutTime === 'morning') meals = [ { name: '🔥 早饭 (练前餐)', r: [0.3, 0.2, 0.3] }, { name: '🔥 练后加餐', r: [0.15, 0.2, 0] }, { name: '午饭', r: [0.35, 0.3, 0.35] }, { name: '晚饭', r: [0.2, 0.3, 0.35] } ];
+            else if (workoutTime === 'noon_before') meals = [ { name: '早饭', r: [0.25, 0.3, 0.35] }, { name: '🔥 午饭 (练前餐)', r: [0.25, 0.2, 0.25] }, { name: '🔥 练后加餐/午加', r: [0.15, 0.2, 0] }, { name: '晚饭', r: [0.35, 0.3, 0.4] } ];
+            else if (workoutTime === 'noon_after') meals = [ { name: '早饭', r: [0.25, 0.25, 0.35] }, { name: '🔥 午饭 (练前充碳)', r: [0.3, 0.2, 0.25] }, { name: '🔥 练后正餐 (下午)', r: [0.3, 0.3, 0.1] }, { name: '晚饭', r: [0.15, 0.25, 0.3] } ];
+            else if (workoutTime === 'evening_before') meals = [ { name: '早饭', r: [0.25, 0.25, 0.35] }, { name: '午饭', r: [0.3, 0.25, 0.35] }, { name: '🔥 练前加餐', r: [0.15, 0.1, 0] }, { name: '🔥 晚饭 (练后餐)', r: [0.3, 0.4, 0.3] } ];
+            else if (workoutTime === 'evening_after') meals = [ { name: '早饭', r: [0.25, 0.25, 0.33] }, { name: '午饭', r: [0.35, 0.3, 0.33] }, { name: '🔥 晚饭 (练前餐)', r: [0.25, 0.25, 0.34] }, { name: '🔥 练后加餐', r: [0.15, 0.2, 0] } ];
+            else if (workoutTime === 'night') meals = [ { name: '早饭', r: [0.25, 0.25, 0.33] }, { name: '午饭', r: [0.3, 0.3, 0.33] }, { name: '🔥 晚饭 (练前储备)', r: [0.35, 0.25, 0.34] }, { name: '🔥 练后夜宵', r: [0.1, 0.2, 0] } ];
+            else meals = [ { name: '早饭 (常规)', r: [0.3, 0.3, 0.33] }, { name: '午饭 (常规)', r: [0.4, 0.4, 0.33] }, { name: '晚饭 (常规)', r: [0.3, 0.3, 0.34] } ];
 
-            // 渲染表格
             const tbody = document.getElementById('meal-plan-body');
             tbody.innerHTML = '';
-            
             meals.forEach(meal => {
-                const c = Math.round(carbs * meal.ratio[0]);
-                const p = Math.round(protein * meal.ratio[1]);
-                const f = Math.round(fat * meal.ratio[2]);
-                
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
-                    <td class="font-medium">${meal.name}</td>
-                    <td><span class="meal-tag">${meal.tag}</span></td>
-                    <td>${c > 0 ? c : 0}</td>
-                    <td>${p > 0 ? p : 0}</td>
-                    <td>${f > 0 ? f : 0}</td>
-                `;
+                tr.innerHTML = `<td class="font-bold text-gray-800">${meal.name}</td><td class="text-blue-600 font-bold text-center bg-blue-50/30">${Math.round(carbs * meal.r[0])}</td><td class="text-green-600 font-bold text-center bg-green-50/30">${Math.round(protein * meal.r[1])}</td><td class="text-yellow-600 font-bold text-center bg-yellow-50/30">${Math.round(fat * meal.r[2])}</td>`;
                 tbody.appendChild(tr);
             });
-
-            // 显示结果区块
+            
+            // 试用版拦截：显示锁定的按钮容器，底层逻辑已删除
+            document.getElementById('canteen-buttons-container').classList.remove('hidden');
             document.getElementById('result-section').classList.remove('hidden');
+            document.getElementById('result-section').scrollIntoView({ behavior: 'smooth' });
         }
+
+        // ================= 试用版：智能训练引擎体验逻辑 =================
+        function updateTrainDays() {
+            const split = document.getElementById('trainSplit');
+            if (split.value === '4day') {
+                showProModal();
+                split.value = '3day'; // 强制弹回免费选项
+            }
+            
+            const daySelect = document.getElementById('trainDay');
+            daySelect.innerHTML = `
+                <option value="day1">Day 1: 背 + 肩后束 + 肱二头</option>
+                <option value="day2">🔒 Day 2: 胸 + 肩前中束 (PRO)</option>
+                <option value="day3">🔒 Day 3: 腿臀 + 腹部 (PRO)</option>
+            `;
+            
+            const targetMuscle = document.getElementById('targetMuscle');
+            if(targetMuscle.value !== 'none') {
+                showProModal();
+                targetMuscle.value = 'none';
+            }
+        }
+
+        function generateTraining() {
+            const day = document.getElementById('trainDay').value;
+            const target = document.getElementById('targetMuscle').value;
+            
+            if (day !== 'day1' || target !== 'none') {
+                showProModal();
+                document.getElementById('trainDay').value = 'day1';
+                document.getElementById('targetMuscle').value = 'none';
+                return;
+            }
+
+            const goal = document.getElementById('trainGoal').value;
+            const repsStr = goal === 'bulk' ? '10-15次 (保留1-2次余力)' : '12-20次 (高次数力竭)';
+            
+            document.getElementById('train-reps-display').innerText = repsStr;
+            let plan = [{part:'背部(垂直拉)',name:'引体向上/高位下拉/直臂下压',sets:3},{part:'背部(水平拉)',name:'杠铃俯身划船/坐姿器械划船',sets:3},{part:'肩后束',name:'蝴蝶机反向飞鸟/哑铃俯身飞鸟',sets:3},{part:'肱二头肌',name:'哑铃交替弯举/牧师椅弯举',sets:3}];
+            let title = "三分化 Day1:核心拉力链";
+            
+            document.getElementById('train-title-display').innerText = title;
+            const tbody = document.getElementById('training-plan-body');
+            tbody.innerHTML = '';
+            plan.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `<td class="text-gray-800 font-bold">${item.part}</td><td class="text-gray-600">${item.name}</td><td><input type="number" class="sets-input" value="3" min="1" disabled></td><td class="text-xs text-gray-400">${repsStr}</td>`;
+                tbody.appendChild(tr);
+            });
+            document.getElementById('training-result-section').classList.remove('hidden');
+        }
+
+        // ================= 试用版：知识库图鉴渲染拦截 =================
+        function initArticleNav() {
+            const container = document.getElementById('article-nav-container'); container.innerHTML = '';
+            articles.forEach((article, index) => {
+                const btn = document.createElement('button'); 
+                const isLocked = index >= 2;
+                btn.className = `article-btn ${isLocked ? 'article-locked' : ''}`; 
+                btn.onclick = () => showArticle(article.id);
+                btn.innerHTML = `<span class="badge ${article.badge} mr-2">${article.module}</span>${isLocked ? '🔒 ' : ''}${article.title}`;
+                container.appendChild(btn);
+            });
+            if(articles.length > 0) showArticle(articles[0].id);
+        }
+
+        function showArticle(articleId) {
+            const index = articles.findIndex(a => a.id === articleId);
+            if(index >= 2) { showProModal(); return; } // 试用版拦截
+            
+            const article = articles[index];
+            document.querySelectorAll('.article-btn').forEach(btn => btn.classList.remove('article-active'));
+            const activeBtn = Array.from(document.querySelectorAll('.article-btn')).find(btn => btn.innerText.includes(article.title) && !btn.innerText.includes('🔒'));
+            if(activeBtn) activeBtn.classList.add('article-active');
+            
+            document.getElementById('article-content-container').innerHTML = `<div class="border-b border-gray-100 pb-4 mb-4"><h2 class="text-xl font-bold text-gray-900">${article.title}</h2><p class="text-xs text-gray-500 mt-2">阅读时长：${article.readTime}</p></div><div class="content-box">${article.content}</div>`;
+        }
+
+        function renderVisualFoodDB() {
+            const grid = document.getElementById('visual-db-grid'); if(!grid) return; grid.innerHTML = '';
+            const iconMap = { '主食类': '🍚', '大荤硬菜类': '🥩', '荤素搭配类': '🥘', '素菜国民类': '🥬', '特色档口类': '🍜', '高蛋白小食': '🥚' };
+            // 试用版只渲染部分作为诱饵
+            CANTEEN_DATABASE.forEach(food => {
+                const icon = iconMap[food.category] || '🍽️'; const totalMacros = food.carbs + food.protein + food.fat;
+                const cPct = totalMacros > 0 ? (food.carbs / totalMacros * 100) : 0; const pPct = totalMacros > 0 ? (food.protein / totalMacros * 100) : 0; const fPct = totalMacros > 0 ? (food.fat / totalMacros * 100) : 0;
+                grid.innerHTML += `
+                    <div class="border border-gray-100 rounded-2xl p-5 bg-white h-full flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <div><span class="text-xs font-bold text-gray-500 bg-gray-100 px-2 py-1 rounded-md mb-2 inline-block">${icon} ${food.category}</span><h3 class="font-bold text-gray-900 text-lg">${food.name}</h3></div>
+                                <div class="text-right bg-blue-50 px-2 py-1 rounded-lg"><span class="text-base font-black text-blue-700">${food.calories}</span><span class="text-[10px] text-blue-400 block -mt-1">kcal/${food.weight}g</span></div>
+                            </div>
+                            <div class="w-full h-1.5 flex rounded-full overflow-hidden mb-2 mt-4 bg-gray-100"><div style="width: ${cPct}%" class="bg-blue-400"></div><div style="width: ${pPct}%" class="bg-green-400"></div><div style="width: ${fPct}%" class="bg-yellow-400"></div></div>
+                            <div class="flex justify-between text-xs font-bold text-gray-600 mb-4"><span class="text-blue-600">碳水 ${food.carbs}g</span><span class="text-green-600">蛋白 ${food.protein}g</span><span class="text-yellow-600">脂肪 ${food.fat}g</span></div>
+                        </div>
+                    </div>`;
+            });
+        }
+
+        window.onload = function() {
+            updateTrainDays(); 
+            renderVisualFoodDB();
+        };
     </script>
 </body>
 </html>
