@@ -15,12 +15,12 @@
         .card { background-color: white; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03); padding: 1.25rem; border: 1px solid #f1f5f9; }
         @media (min-width: 768px) { .card { padding: 2rem; } }
         
-        select, input { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.6rem 0.75rem; width: 100%; outline: none; transition: all 0.2s ease; background-color: #f8fafc; color: #1e293b; font-weight: 500; font-size: 16px !important; }
+        select, input { border: 1px solid #e2e8f0; border-radius: 0.5rem; padding: 0.6rem 0.75rem; width: 100%; outline: none; transition: all 0.2 ease; background-color: #f8fafc; color: #1e293b; font-weight: 500; font-size: 16px !important; }
         select:focus, input:focus { border-color: #2563eb; background-color: white; box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
         label { font-weight: 600; color: #475569; margin-bottom: 0.3rem; display: block; font-size: 0.875rem;}
         
         .data-table { width: 100%; border-collapse: collapse; margin-top: 1rem; font-size: 0.875rem; }
-        .data-table th, .data-table td { border-bottom: 1px solid #f1f5f9; padding: 1rem 0.75rem; text-align: center; }
+        .data-table th, .data-table td { border-bottom: 1px solid #f1f5f9; padding: 1rem 0.75rem; text-align: center; vertical-align: middle; }
         .data-table td:first-child { text-align: left; font-weight: 600; color: #1e293b; width: 22%; }
         .data-table th { background-color: #f8fafc; font-weight: 600; color: #64748b; text-align: center; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.05em;}
         .data-table tr:hover { background-color: #f8fafc; transition: background-color 0.2s; }
@@ -28,12 +28,12 @@
         .sets-input { width: 60px; text-align: center; padding: 0.4rem; font-weight: bold; color: #2563eb; }
         
         .badge { display: inline-block; padding: 0.25rem 0.6rem; border-radius: 9999px; font-size: 0.7rem; font-weight: 700; margin-bottom: 0.2rem; letter-spacing: 0.02em;}
-        .badge-blue { background-color: #eff6ff; color: #1d4ed8; }
-        .badge-green { background-color: #f0fdf4; color: #15803d; }
-        .badge-yellow { background-color: #fefce8; color: #b45309; }
-        .badge-purple { background-color: #faf5ff; color: #7e22ce; }
-        .badge-red { background-color: #fef2f2; color: #b91c1c; }
-        .badge-gray { background-color: #f1f5f9; color: #475569; }
+        .badge-blue { background-color: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; }
+        .badge-green { background-color: #f0fdf4; color: #15803d; border: 1px solid #bbf7d0; }
+        .badge-yellow { background-color: #fefce8; color: #b45309; border: 1px solid #fef08a; }
+        .badge-purple { background-color: #faf5ff; color: #7e22ce; border: 1px solid #e9d5ff; }
+        .badge-red { background-color: #fef2f2; color: #b91c1c; border: 1px solid #fecaca; }
+        .badge-gray { background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
 
         nav { backdrop-filter: blur(8px); background-color: rgba(255, 255, 255, 0.9); border-bottom: 1px solid #e2e8f0; }
         #main-nav { -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
@@ -275,44 +275,34 @@
 
         <section id="sec-food" class="view-section space-y-6 hidden transition-opacity duration-300">
             <div class="text-center pb-6">
-                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">核心食物成分字典</h1>
-                <p class="text-gray-500 mt-3 text-sm md:text-base max-w-2xl mx-auto">掌握核心食材的生熟转化率，你的眼睛就是最准的秤。</p>
+                <h1 class="text-3xl md:text-4xl font-black text-gray-900 tracking-tight">小凡食堂食物字典</h1>
+                <p class="text-gray-500 mt-3 text-sm md:text-base max-w-2xl mx-auto">抛弃死记硬背。基于核心成分解构常见外卖与食堂档口，你的眼睛就是最准的秤。</p>
             </div>
             
-            <div class="card">
-                <h2 class="text-lg font-bold mb-4 flex items-center text-gray-900"><span class="badge badge-blue mr-3">A级 复合碳水</span> 肌糖原主要来源</h2>
-                <div class="overflow-x-auto rounded-xl border border-gray-200">
-                    <table class="data-table mt-0 min-w-[500px]">
-                        <thead><tr><th>食材 (状态)</th><th>碳水率</th><th>GI指数</th><th>硬核避坑指南</th></tr></thead>
-                        <tbody>
-                            <tr><td>生米类 (大/糙/小米)</td><td class="font-bold text-blue-600">75%</td><td>高/中</td><td class="text-left text-xs">除了黑米外，糙米等生重碳水率均在75%左右。</td></tr>
-                            <tr><td>熟米饭 (常规)</td><td class="font-bold text-blue-600">25%</td><td>高</td><td class="text-left text-xs">普通外卖盒压实的饭，往往含100-120g纯碳水。</td></tr>
-                            <tr><td>生麦片 (纯燕麦)</td><td class="font-bold text-blue-600">60%</td><td>低</td><td class="text-left text-xs">饱腹感强。避开配料表带“植脂末、白砂糖”的燕麦。</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+            <div id="food-dictionary-container" class="space-y-8"></div>
 
-            <div class="card">
-                <h2 class="text-lg font-bold mb-4 flex items-center text-gray-900"><span class="badge badge-green mr-3">S级 核心蛋白</span> 修复肌纤维基石</h2>
-                <div class="overflow-x-auto rounded-xl border border-gray-200">
-                    <table class="data-table mt-0 min-w-[500px]">
-                        <thead><tr><th>食材 (状态)</th><th>蛋白率</th><th>脂肪/碳水</th><th>硬核避坑指南</th></tr></thead>
-                        <tbody>
-                            <tr><td>生瘦肉 (鸡/牛/里脊)</td><td class="font-bold text-green-600">20%</td><td>极低脂</td><td class="text-left text-xs">绝大多数陆地纯瘦肉生重蛋白率均在20%。</td></tr>
-                            <tr><td>全蛋 (带壳)</td><td class="font-bold text-green-600">12%</td><td>5g脂/个</td><td class="text-left text-xs">1个标准全蛋约含 6g蛋白 + 5g脂肪。</td></tr>
-                            <tr class="bg-red-50"><td>🚫 脂肪陷阱肉类</td><td class="font-bold text-red-600">极低</td><td>爆表</td><td class="text-left text-xs"><strong>隐形脂肪：五花肉、排骨、肥牛卷、肉丸。</strong>全长肥肉！</td></tr>
-                        </tbody>
-                    </table>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6 border-t border-gray-200 pt-8">
+                <div class="card border-2 border-blue-200 bg-blue-50/50 hover:bg-blue-50 transition flex flex-col justify-between h-full shadow-sm">
+                    <div>
+                        <div class="flex items-center mb-3">
+                            <span class="text-2xl mr-2">🔄</span>
+                            <h2 class="text-lg font-bold text-blue-900">食物库持续迭代中</h2>
+                        </div>
+                        <p class="text-sm text-blue-800 mb-6 leading-relaxed">找不到你常吃的菜？升级解锁Pro版后加入内部健身交流群，把你的<strong>大学食堂菜单、外卖常点菜品</strong>发在群里，我会用算法和营养学数据为你单独测算，并持续更新！</p>
+                    </div>
+                    <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-3.5 rounded-lg text-sm w-full transition shadow-md flex justify-center items-center mt-auto" onclick="copyXhs(this)">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9a1.994 1.994 0 01-1.414-.586m0 0L11 14h4a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2v4l.586-.586z"></path></svg>
+                        复制小红书号，私信拉你入群
+                    </button>
                 </div>
-            </div>
 
-            <div class="card border-2 border-dashed border-gray-300 bg-gray-50 cursor-pointer hover:bg-gray-100 transition" onclick="triggerPaywall('解锁终极「无卡平替」黑名单与 30+ 种食堂外卖实物图鉴库，减脂不再痛苦节食，吃撑一样掉秤。')">
-                <div class="flex flex-col items-center justify-center py-8 opacity-80">
+                <div class="card border-2 border-dashed border-gray-300 bg-gray-50 cursor-pointer hover:bg-gray-100 transition flex flex-col justify-center items-center text-center py-8 opacity-90 h-full shadow-sm" onclick="triggerPaywall('解锁终极「无卡平替」黑名单与 30+ 种食堂外卖实物图鉴库，减脂不再痛苦节食，吃撑一样掉秤。')">
                     <span class="text-4xl mb-3">🥷</span>
-                    <h2 class="text-xl font-bold mb-2 text-gray-900">黑客区：无卡平替指南 (🔒 锁定)</h2>
-                    <p class="text-sm text-gray-500 mb-4">减脂期提升幸福感的合法“作弊”手段，帮你抹除 500 大卡隐形热量。</p>
-                    <span class="bg-yellow-400 text-yellow-900 text-xs font-bold px-3 py-1 rounded-full">点击升级 PRO 解锁查阅</span>
+                    <h2 class="text-lg font-bold mb-3 text-gray-900">无卡平替与实物图鉴库</h2>
+                    <p class="text-sm text-gray-500 mb-6 px-4">抹除 500 大卡隐形热量，无需自己算宏量，直接照抄实物搭配。</p>
+                    <span class="bg-gray-900 text-white text-sm font-bold px-5 py-2.5 rounded-full flex items-center shadow-md">
+                        <span class="text-yellow-400 mr-2">🔒</span> 升级 PRO 解锁查阅
+                    </span>
                 </div>
             </div>
         </section>
@@ -412,14 +402,73 @@
     </div>
 
     <script>
-        // 核心数据 (包含免费+需付费解密的诱饵)
+        // 核心数据 (全面集成了你的硬核食物库)
         const AppDB = {
             articles: [
-                { id: 'm1_1', isPro: false, module: '减脂底层逻辑', badge: 'badge-blue', title: '体重停滞的假象：皮质醇与“水肿欺骗”', readTime: '5分钟', content: `<p>很多小白减脂，每天少吃多动，前几天掉秤很快，到了第二周体重却一动不动，甚至喝口水都能涨半斤。</p><h3 class="text-lg font-bold text-gray-900 mt-6 mb-3">皮质醇的锁水效应</h3><p>当你长时间制造极大的热量缺口时，肾上腺会分泌大量的压力激素——<strong>皮质醇</strong>。它会导致<strong>水钠潴留（Water Retention）</strong>，皮下细胞会像海绵一样死死锁住水分。所以你在体重秤上纹丝不动。</p><div class="highlight-box"><strong class="block mb-2 text-blue-700">小凡硬核破局法：</strong>吃一顿富含碳水的高热量大餐（欺骗餐）并好好睡一觉，压制皮质醇。第二天身体会排出水分（Whoosh 效应），体重直接尿崩式下降。</div>` },
+                { id: 'm1_1', module: '减脂底层逻辑', badge: 'badge-red', title: '体重停滞的真相：平台期的科学破局指南”', readTime: '5分钟', content: `<p>很多小白减脂，每天少吃多动，前几天掉秤很快，到了第二周体重却一动不动，甚至喝口水都涨半斤。这时候 80% 的人会崩溃，选择暴饮暴食放弃。</p><h3 class="text-lg font-bold text-gray-900 mt-6 mb-3">减脂平台期的核心原因</h3><p><strong>长期热量缺口</strong>会让身体启动 “节能模式”，主动降低基础代谢、减少非运动消耗，同时瘦素下降、饥饿素升高，让你更难坚持，这是人体的生存本能，也是平台期的根本原因。</p><p>同时长期极端热量缺口、过度有氧、压力过大，会导致皮质醇（压力激素）轻度升高，引发<strong>水钠潴留（Water Retention）</strong>，让体重暂时停滞甚至上升。皮质醇的作用被很多网红过度妖魔化：只有长期、病理性的高皮质醇（如库欣综合征）才会导致严重的肌肉分解和水肿，普通减脂期的轻度升高，不会出现 “皮下细胞像海绵锁水” 的极端现象。你每天制造的热量缺口，确实在燃烧脂肪，但脂肪分解的速度远慢于水分波动的速度，体重秤的数字无法实时反映真实减脂进度。</p><div class="highlight-box"><strong class="block mb-2 text-blue-700">小凡硬核破局法 (The Whoosh Effect)：</strong>减脂没有捷径，平台期是正常的生理过程。真正的破局，是温和热量缺口 + 力量训练 + 规律作息，靠 “吃大餐” 只能获得短期的体重假象，无法真正减脂。永远记住：看三维尺量出的维度，永远比只看体重秤更准确。</div>` },
                 { id: 'm1_2', isPro: true, module: '减脂核心', badge: 'badge-red', title: '局部减脂谎言与“顽固脂肪”受体学说', readTime: '6分钟', content: 'PRO内容' },
                 { id: 'm2_1', isPro: true, module: '增肌揭秘', badge: 'badge-green', title: '拒绝脏增肌：P-Ratio分配率与体脂红线', readTime: '7分钟', content: 'PRO内容' },
                 { id: 'm2_2', isPro: true, module: '训练误区', badge: 'badge-yellow', title: '垃圾容量陷阱：练了3小时为什么不长肉？', readTime: '6分钟', content: 'PRO内容' },
                 { id: 'm3_1', isPro: true, module: '结构力学', badge: 'badge-purple', title: '深蹲剪切力与动作轨迹的 CV 视觉测算', readTime: '8分钟', content: 'PRO内容' }
+            ],
+            foods: [
+                { category: '大荤硬菜类', name: '红烧肉', weight: 120, calories: 480, carbs: 2, protein: 12, fat: 45, goals: ['bulk'], tips: '脂肪含量极高，减脂期慎选' },
+                { category: '大荤硬菜类', name: '红烧排骨', weight: 150, calories: 410, carbs: 8, protein: 25, fat: 28, goals: ['recomp', 'bulk'], tips: '骨头占重，实际肉量较少' },
+                { category: '大荤硬菜类', name: '糖醋里脊', weight: 150, calories: 450, carbs: 35, protein: 18, fat: 22, goals: ['bulk'], tips: '含糖量高，减脂期禁用' },
+                { category: '大荤硬菜类', name: '清蒸鱼', weight: 150, calories: 180, carbs: 0, protein: 35, fat: 5, goals: ['cut', 'recomp', 'bulk'], tips: '高蛋白低脂肪，减脂期首选' },
+                { category: '大荤硬菜类', name: '红烧鸡腿(1个)', weight: 150, calories: 240, carbs: 5, protein: 22, fat: 14, goals: ['cut', 'recomp', 'bulk'], tips: '去皮吃可以少摄入至少5g脂肪' },
+                { category: '大荤硬菜类', name: '水煮肉片', weight: 200, calories: 380, carbs: 12, protein: 20, fat: 28, goals: ['bulk'], tips: '表面浮油极多，吃前建议过水，减脂期避开' },
+                { category: '大荤硬菜类', name: '土豆炖牛腩', weight: 200, calories: 310, carbs: 20, protein: 18, fat: 16, goals: ['recomp', 'bulk'], tips: '土豆吸满了牛油，按主食+脂肪算' },
+                
+                { category: '荤素搭配类', name: '宫保鸡丁', weight: 180, calories: 310, carbs: 12, protein: 22, fat: 18, goals: ['cut', 'recomp', 'bulk'], tips: '花生多，注意脂肪量' },
+                { category: '荤素搭配类', name: '番茄炒蛋', weight: 180, calories: 220, carbs: 8, protein: 10, fat: 15, goals: ['cut', 'recomp', 'bulk'], tips: '经典下饭菜，控制量' },
+                { category: '荤素搭配类', name: '木须肉', weight: 200, calories: 280, carbs: 15, protein: 20, fat: 14, goals: ['cut', 'recomp', 'bulk'], tips: '营养均衡' },
+                { category: '荤素搭配类', name: '青椒炒肉丝', weight: 150, calories: 210, carbs: 8, protein: 12, fat: 14, goals: ['cut', 'recomp', 'bulk'], tips: '食堂百搭菜，肉丝过油较多' },
+                { category: '荤素搭配类', name: '鱼香肉丝', weight: 150, calories: 240, carbs: 16, protein: 10, fat: 15, goals: ['recomp', 'bulk'], tips: '糖醋调味热量偏高，碳水刺客' },
+                { category: '荤素搭配类', name: '芹菜炒牛肉', weight: 150, calories: 180, carbs: 6, protein: 15, fat: 10, goals: ['cut', 'recomp', 'bulk'], tips: '优质红肉来源，芹菜高纤维' },
+                
+                { category: '素菜国民类', name: '蒜蓉西兰花', weight: 200, calories: 120, carbs: 10, protein: 6, fat: 7, goals: ['cut', 'recomp', 'bulk'], tips: '高纤维，饱腹感强' },
+                { category: '素菜国民类', name: '红烧豆腐', weight: 200, calories: 180, carbs: 8, protein: 15, fat: 10, goals: ['cut', 'recomp', 'bulk'], tips: '植物蛋白好来源' },
+                { category: '素菜国民类', name: '凉拌黄瓜', weight: 150, calories: 50, carbs: 5, protein: 2, fat: 3, goals: ['cut', 'recomp'], tips: '低卡解腻' },
+                { category: '素菜国民类', name: '清炒小白菜', weight: 150, calories: 60, carbs: 4, protein: 2, fat: 4, goals: ['cut', 'recomp', 'bulk'], tips: '补充微量元素，热量可忽略' },
+                { category: '素菜国民类', name: '干煸四季豆', weight: 150, calories: 130, carbs: 10, protein: 3, fat: 8, goals: ['recomp', 'bulk'], tips: '油炸过再炒的，含有隐形脂肪' },
+                { category: '素菜国民类', name: '地三鲜', weight: 150, calories: 220, carbs: 18, protein: 3, fat: 15, goals: ['bulk'], tips: '茄子和土豆都是吸油海绵，热量炸弹' },
+                
+                { category: '特色档口类', name: '韩式拌饭', weight: 350, calories: 520, carbs: 70, protein: 20, fat: 18, goals: ['bulk'], tips: '热量高，增肌好选择' },
+                { category: '特色档口类', name: '黄焖鸡米饭', weight: 400, calories: 580, carbs: 65, protein: 30, fat: 18, goals: ['bulk'], tips: '酱汁多，别泡饭' },
+                { category: '特色档口类', name: '牛肉板面/拉面', weight: 400, calories: 520, carbs: 65, protein: 20, fat: 18, goals: ['bulk'], tips: '汤底红油多，只吃面和肉，别喝汤' },
+                { category: '特色档口类', name: '麻辣烫(荤素搭)', weight: 400, calories: 450, carbs: 40, protein: 15, fat: 25, goals: ['recomp', 'bulk'], tips: '选清汤/骨汤，避开麻酱底和丸子' },
+                
+                { category: '主食类', name: '白米饭', weight: 100, calories: 116, carbs: 25, protein: 2.6, fat: 0.3, goals: ['cut', 'recomp', 'bulk'], tips: '常规分量，消化快' },
+                { category: '主食类', name: '糙米/杂粮饭', weight: 100, calories: 120, carbs: 26, protein: 3, fat: 1, goals: ['cut', 'recomp'], tips: '低GI，饱腹感极强' },
+                { category: '主食类', name: '蒸红薯/紫薯', weight: 100, calories: 86, carbs: 20, protein: 1.6, fat: 0.2, goals: ['cut', 'recomp'], tips: '优质粗粮，减脂期神仙主食' },
+                { category: '主食类', name: '荞麦面(熟)', weight: 100, calories: 130, carbs: 28, protein: 5, fat: 0.5, goals: ['cut', 'recomp', 'bulk'], tips: '控糖期优选面食' },
+                { category: '主食类', name: '馒头', weight: 100, calories: 221, carbs: 47, protein: 7, fat: 1.1, goals: ['recomp', 'bulk'], tips: '碳水密度大，管饱' },
+                
+                { category: '高蛋白小食', name: '水煮蛋', weight: 50, calories: 70, carbs: 0.6, protein: 6, fat: 5, goals: ['cut', 'recomp', 'bulk'], tips: '完美天然蛋白来源' },
+                { category: '高蛋白小食', name: '无糖豆浆', weight: 250, calories: 80, carbs: 6, protein: 8, fat: 3, goals: ['cut', 'recomp', 'bulk'], tips: '好喝没负担，别加糖' },
+                { category: '高蛋白小食', name: '牛奶(全脂)', weight: 250, calories: 150, carbs: 12, protein: 8, fat: 8, goals: ['recomp', 'bulk'], tips: '减脂期可换脱脂' },
+                
+                { category: '中式早餐类', name: '大肉包', weight: 100, calories: 250, carbs: 30, protein: 10, fat: 10, goals: ['recomp', 'bulk'], tips: '肉馅多肥肉，建议只吃半个皮或换菜包' },
+                { category: '中式早餐类', name: '香菇菜包', weight: 100, calories: 180, carbs: 32, protein: 5, fat: 4, goals: ['cut', 'recomp', 'bulk'], tips: '配个鸡蛋就是完美早餐' },
+                { category: '中式早餐类', name: '茶叶蛋', weight: 50, calories: 75, carbs: 1, protein: 6, fat: 5, goals: ['cut', 'recomp', 'bulk'], tips: '早八最强廉价蛋白' },
+                { category: '中式早餐类', name: '煎饼果子(加薄脆)', weight: 250, calories: 450, carbs: 50, protein: 15, fat: 20, goals: ['bulk'], tips: '点单暗号：不要薄脆，少刷酱' },
+                { category: '中式早餐类', name: '鸡蛋灌饼', weight: 200, calories: 420, carbs: 45, protein: 12, fat: 21, goals: ['bulk'], tips: '饼皮起酥油多，脂肪爆炸，减脂刺客' },
+                { category: '中式早餐类', name: '皮蛋瘦肉粥', weight: 300, calories: 180, carbs: 25, protein: 8, fat: 5, goals: ['cut', 'recomp', 'bulk'], tips: 'GI较高，适合练前一小时吃' },
+                { category: '中式早餐类', name: '油条(一根)', weight: 80, calories: 310, carbs: 35, protein: 6, fat: 16, goals: ['none'], tips: '海绵吸油机器，除了热量没营养，尽量戒掉' },
+                { category: '中式早餐类', name: '鲜肉小馄饨', weight: 150, calories: 250, carbs: 30, protein: 10, fat: 10, goals: ['recomp', 'bulk'], tips: '汤底通常有猪油和味精，吃馄饨别喝汤' },
+                { category: '中式早餐类', name: '全麦面包(2片)', weight: 70, calories: 180, carbs: 35, protein: 7, fat: 2, goals: ['cut', 'recomp'], tips: '配料表全麦粉排第一的才是真全麦' },
+                { category: '中式早餐类', name: '即食燕麦片(30g)', weight: 30, calories: 110, carbs: 20, protein: 4, fat: 2, goals: ['cut', 'recomp'], tips: '宿舍党神器，加豆浆/牛奶完美早餐' },
+                { category: '中式早餐类', name: '冰美式(中杯)', weight: 350, calories: 10, carbs: 2, protein: 0, fat: 0, goals: ['cut', 'recomp', 'bulk'], tips: '消水肿利器，热量可忽略' },
+                
+                { category: '水果快充类', name: '香蕉(中等1根)', weight: 120, calories: 105, carbs: 27, protein: 1, fat: 0, goals: ['cut', 'recomp', 'bulk'], tips: '练前练后神级快碳，防抽筋' },
+                { category: '水果快充类', name: '苹果(中等1个)', weight: 200, calories: 100, carbs: 25, protein: 0.5, fat: 0, goals: ['cut', 'recomp', 'bulk'], tips: '饱腹感强，含果胶，适合练前加餐' },
+                { category: '水果快充类', name: '西瓜(大片/300g)', weight: 300, calories: 95, carbs: 24, protein: 2, fat: 0, goals: ['recomp', 'bulk'], tips: '升糖极快，练后迅速补充糖原，减脂期少吃' },
+                { category: '水果快充类', name: '葡萄(150g)', weight: 150, calories: 100, carbs: 26, protein: 1, fat: 0, goals: ['recomp', 'bulk'], tips: '快碳吸收极速，练后吃极佳' },
+                
+                { category: '练后补剂类', name: '乳清蛋白粉(1勺)', weight: 30, calories: 120, carbs: 3, protein: 24, fat: 1.5, goals: ['cut', 'recomp', 'bulk'], tips: '吸收最快的顶级氨基酸，练后30分钟内喝' },
+                { category: '练后补剂类', name: '白馒头(半个)', weight: 50, calories: 110, carbs: 23, protein: 3.5, fat: 0.5, goals: ['recomp', 'bulk'], tips: '最接地气的练后快碳，配蛋白粉绝佳' },
+                { category: '练后补剂类', name: '米糊', weight: 30, calories: 122, carbs: 27, protein: 1.8, fat: 0.5, goals: ['recomp', 'bulk'], tips: '高碳水低蛋白极低脂肪，本质是练后快碳补剂' }
             ]
         };
 
@@ -445,10 +494,10 @@
             navigator.clipboard.writeText('95127631290').then(() => {
                 const originalText = btn.innerHTML;
                 btn.innerHTML = '✅ 复制成功，快去小红书搜我吧！';
-                btn.classList.add('bg-green-600', 'border-green-600');
+                btn.classList.add('bg-green-600', 'border-green-600', 'text-white');
                 setTimeout(() => { 
                     btn.innerHTML = originalText; 
-                    btn.classList.remove('bg-green-600', 'border-green-600');
+                    btn.classList.remove('bg-green-600', 'border-green-600', 'text-white');
                 }, 3000);
             }).catch(err => alert('复制失败，请手动长按复制数字'));
         }
@@ -506,7 +555,9 @@
                 document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('nav-active'));
                 document.getElementById('sec-' + tabId).classList.remove('hidden');
                 document.querySelector(`[data-tab="${tabId}"]`).classList.add('nav-active');
+                
                 if(tabId === 'learn') this.renderArticles();
+                if(tabId === 'food') this.renderFoodDictionary();
             },
             renderPlannerResult() {
                 const state = AppState.planner;
@@ -541,12 +592,79 @@
                     } else {
                         btn.className = `article-btn article-active mb-2 cursor-pointer`;
                         btn.innerHTML = `<span class="badge ${a.badge} mr-2">${a.module}</span>${a.title}`;
-                        btn.onclick = () => {}; // 只有一篇免费的，默认展示
+                        btn.onclick = () => {};
                     }
                     nav.appendChild(btn);
                 });
                 const first = AppDB.articles[0];
                 content.innerHTML = `<div class="p-6 md:p-8"><div class="border-b border-gray-100 pb-4 mb-6"><h2 class="text-2xl font-black text-gray-900">${first.title}</h2><p class="text-xs text-gray-500 mt-2">免费试读 · 阅读时长：${first.readTime}</p></div><div class="content-box text-base">${first.content}</div></div>`;
+            },
+            renderFoodDictionary() {
+                const container = document.getElementById('food-dictionary-container');
+                if (container.innerHTML !== '') return; // 只渲染一次
+
+                // 将数据按 category 分组
+                const grouped = AppDB.foods.reduce((acc, curr) => {
+                    if (!acc[curr.category]) acc[curr.category] = [];
+                    acc[curr.category].push(curr);
+                    return acc;
+                }, {});
+
+                let html = '';
+                for (const [category, items] of Object.entries(grouped)) {
+                    // 根据分类名称动态分配徽章颜色
+                    let badgeClass = 'badge-blue';
+                    if (category.includes('大荤') || category.includes('特色')) badgeClass = 'badge-red';
+                    else if (category.includes('素菜') || category.includes('水果')) badgeClass = 'badge-green';
+                    else if (category.includes('早餐') || category.includes('主食')) badgeClass = 'badge-yellow';
+                    else if (category.includes('高蛋白') || category.includes('补剂')) badgeClass = 'badge-purple';
+
+                    let tableRows = items.map(item => {
+                        // 热量标红逻辑 (大于400卡算高热量)
+                        const calClass = item.calories > 400 ? 'text-red-600 font-black' : 'text-gray-800 font-bold';
+                        return `
+                        <tr>
+                            <td class="text-left leading-tight">
+                                <span class="font-bold text-gray-800 block">${item.name}</span>
+                                <span class="text-xs text-gray-400 font-normal">参考量: ${item.weight}g</span>
+                            </td>
+                            <td class="${calClass} text-base">${item.calories}</td>
+                            <td class="text-xs tracking-tight">
+                                <div class="flex flex-col md:flex-row justify-center md:gap-2">
+                                    <span class="text-blue-600 font-semibold">C ${item.carbs}g</span>
+                                    <span class="text-green-600 font-semibold">P ${item.protein}g</span>
+                                    <span class="text-red-500 font-semibold">F ${item.fat}g</span>
+                                </div>
+                            </td>
+                            <td class="text-left text-xs text-gray-600 leading-relaxed">${item.tips}</td>
+                        </tr>
+                        `;
+                    }).join('');
+
+                    html += `
+                    <div class="card overflow-hidden !p-0">
+                        <div class="bg-gray-50 border-b border-gray-100 px-4 md:px-6 py-4">
+                            <h2 class="text-base md:text-lg font-bold flex items-center text-gray-900 m-0">
+                                <span class="badge ${badgeClass} mr-2 shadow-sm">${category}</span> 
+                            </h2>
+                        </div>
+                        <div class="overflow-x-auto">
+                            <table class="data-table !mt-0 min-w-[550px] w-full">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 25%">菜品</th>
+                                        <th style="width: 15%">热量(kcal)</th>
+                                        <th style="width: 25%">宏量素</th>
+                                        <th style="width: 35%">硬核避坑指南</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${tableRows}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                    `;
+                }
+                container.innerHTML = html;
             }
         };
 
